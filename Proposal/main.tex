@@ -1,0 +1,214 @@
+\documentclass[12pt,a4paper]{report}
+
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{graphicx}    
+\usepackage{setspace}   
+\usepackage{array}    
+\usepackage{ragged2e}    
+\usepackage{parskip}    
+\usepackage{tikz}
+\usepackage{everypage}
+\usepackage{setspace}
+
+\AddEverypageHook{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \draw[line width=1pt]
+            ($(current page.north west) + (1cm,-1cm)$)
+            rectangle
+            ($(current page.south east) + (-1cm,1cm)$);
+    \end{tikzpicture}
+}
+\setcounter{secnumdepth}{2}
+\renewcommand{\thesection}{\arabic{section}}
+
+
+\begin{document}
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    \includegraphics[width=4cm]{logo.png}\par\vspace{1cm}
+
+    {\Large \textbf{NAMAL UNIVERSITY MIANWALI}}\\[6pt]
+    {\large \textbf{Department of Computer Science}}\\[2cm]
+
+    {\Huge \textbf{Semester Project Proposal}}\\[0.5cm]
+    {\LARGE \textbf{Title: \textit{CattleCare Pro}}}\\[1.8cm]
+
+    {\large \textbf{Subject:} Software Engineering}\\[1cm]
+
+
+    \begin{center}
+    \begin{tabular}{ >{\bfseries}l  l }
+    Student 1: & Muhammad Ali \\
+    Registration No: & NUM-BSCS-2024-46\\
+    Email: & bscs24f46@namal.edu.pk\\[8pt]
+
+    Student  2: & Muhammad Ahmad\\
+    Registration No: & NUM-BSCS-2024-45 \\
+    Email: & bscs24f45@namal.edu.pk \\[8pt]
+
+    Student 3: & Aliya Ashraf \\
+    Registration No: & NUM-BSCS-2024-08 \\
+    Email: &bscs24f08@namal.edu.pk\\[8pt]
+
+    \end{tabular}
+    \end{center}
+
+    \vfill
+
+    \begin{flushleft}
+    \textbf{Submitted To:}\\
+    Ms. Asiya Batool\\
+    Lecturer, Department of Computer Science
+    \end{flushleft}
+
+    \vspace{1cm}
+
+    {\large \textbf{Submission Date:} \today}
+
+\end{titlepage}
+
+\newpage
+\begin{center}
+    {\Huge \textbf{Project Agreement}}\\[1cm]
+\end{center}
+
+We, the undersigned students of \textbf{Department of Computer Science}, 
+hereby declare that we have discussed and finalized our semester project  titled 
+\textit{"CattleCare Pro"} under the supervision of 
+\textbf{Dr. Shafiq ur Rehman Khan}. 
+
+We agree to work with sincerity and dedication towards the successful 
+completion of this project and abide by all academic and ethical guidelines 
+set forth by the department.
+
+\vspace{2cm}
+
+\begin{flushleft}
+\textbf{Supervisor Signature:} \raisebox{4pt}{\includegraphics[height=1.8cm]{signature_rp.png}}\\[-4pt]\hrulefill \\[1cm]
+
+1. \textbf{Group Members:}\\[0.5cm]
+\noindent
+\textbf{Name:} Muhammad Ali \\[8pt]
+\textbf{Signature:}
+\raisebox{4pt}{\includegraphics[height=1.8cm]{signature_ali.png}}\\[-4pt]
+\hrulefill
+
+%\vspace{1cm}
+2. \textbf{Name:} Muhammad Ahmad \\[8pt]
+\textbf{Signature:}
+\raisebox{4pt}{\includegraphics[height=1.5cm]{signature_ahmad.png}}\\[-4pt]
+\hrulefill
+
+3. \textbf{Name:} Aliya Ashraf \\[8pt]
+\textbf{Signature:}
+\raisebox{4pt}{\includegraphics[height=1.5cm]{signature_aliya.jpeg}}\\[-4pt]
+\hrulefill
+
+\vspace{1cm}
+\textbf{Date:} \today
+\end{flushleft}
+
+\newpage
+\tableofcontents
+\newpage
+
+
+\section{Introduction}
+\begin{spacing}{1.5}  
+CattleCare Pro is an intelligent livestock management system designed for cattle farm owners to manage their farms from a single digital hub. The emphasis of the system is on enhancing security, and productivity among the cattle through a modern technological approach. In this way, the movement of the cattle, such as leaving the shelters for grazing or feeding grounds, can be traced with ease by the admin at all times through a single admin dashboard. Moreover, shelter conditions are maintained, security is enhanced, and production insights are guaranteed. The whole idea revolves around replacing the traditional and time-consuming practices in farm management with an efficient, automated, and data-driven solution.
+\end{spacing}
+
+\section{Problem Statement}
+\begin{spacing}{1.5}
+Conventionally, cattle movement is tracked by hanging a bell around their necks so that farmers can hear the ringing of the bells and track the location of the animal. This is highly imprecise, time-consuming, and inefficient. It is quite difficult for the farm owner/admin to know the exact location of their cattle in real time when they leave the shelter either for grazing or to take up food. Manual tracking also poses a high risk of the cattle getting lost or indulging in fights within the shelter and, therefore makes management and ensuring security quite challenging. A digital platform is required for tracking the movement of cattle with high accuracy, capturing the real-time location to enhance the security in the shelter, and thereby enabling the admin to manage the livestock and the shelter effectively.
+\end{spacing}
+
+
+
+\section{Project Objective}
+\begin{spacing}{1.5}  
+The main objective of CattleCare Pro is to provide an integrated farm management system that enables effective, real-time monitoring and administrative control through a single dashboard. 
+\newpage
+The system focuses on tracking cattle movements, particularly when they leave the shelter to graze or feed, and ensuring shelter security. The project aims to:
+
+\begin{itemize}
+    \item Track cattle movements in real-time when they leave the shelter
+    \item Monitor and enhance shelter security to prevent misbehavior or fights
+    \item Reduce manual supervision workload and improve farm management efficiency
+\end{itemize}
+\end{spacing}
+
+
+\section{Stakeholder Identification}
+\begin{spacing}{1.5}
+The following stakeholders are involved in the development and use of CattleCare Pro:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Stakeholder} & \textbf{Role / Interest} \\ \hline
+Admin / Farm Owner & Primary user; manages cattle movements, shelter security, and overall farm operations. \\ \hline
+Farm Workers & Assist in updating routine cattle and shelter data, and support daily operations. \\ \hline
+Requirement Provider & Provides detailed requirements (usually the farm owner) and validates the system throughout development. \\ \hline
+Development Team & Designs, develops, and deploys the system following Agile methodology. Engages in iterative development and frequent feedback sessions with stakeholders. \\ \hline
+\end{tabular}
+\caption{Stakeholders and Their Roles in CattleCare Pro}
+\end{table}
+
+\noindent
+
+\textbf{Agile Methodology Note:} The project follows Agile practices, allowing continuous collaboration with stakeholders, iterative development, and regular review of features such as cattle tracking and shelter security. This ensures the system meets user needs effectively and can adapt to any requirement changes quickly.
+\end{spacing}
+
+
+\section{Software Development Methodology}
+\begin{spacing}{1.5}  
+Agile methodology will be applied in this project because it allows flexibility, continuous review, and iterative development of the system. Development will be done in a number of sprints, each sprint focusing on a different module, such as cattle tracking, shelter monitoring, and production management. 
+\newpage
+
+Agile allows easy communication with the requirement provider frequently for timely feedback to achieve the expected outcomes without costly rework.
+\end{spacing}
+
+
+\section{Tools and Technologies}
+\begin{spacing}{1.5}
+The following tools and technologies will be used for designing and modeling the prototype of the CattleCare Pro system:
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|p{4cm}|p{9cm}|}
+\hline
+\textbf{Category} & \textbf{Tools / Technologies} \\ \hline
+Frontend & React, Nextjs \\ \hline
+Backend & Nodejs, Expressjs \\ \hline
+Database & Mongodb or Firebase Firestore\\ \hline
+Authentication & Firebase \\ \hline
+Prototyping \& UI/UX Design & Figma \\ \hline
+Documentation \& Report Writing & LaTeX \\ \hline
+Presentation & Microsoft PowerPoint  \\ \hline
+Version Control & Git \& GitHub \\ \hline
+Research Sources & Requirement Provider Interview, Online Research \\ \hline
+\end{tabular}
+\end{table}
+
+\end{spacing}
+
+\section*{References}
+\begin{spacing}{1.5}
+\begin{flushleft}
+[1] Requirement Provider Interview, Primary Source, Nov 2025.\\[4pt]
+[2] K. Schwaber and J. Sutherland, *The Scrum Guide: The Definitive Guide to Scrum — The Rules of the Game*, Scrum.org, 2020. [Online]. Available: https://scrumguides.org/\\[4pt]
+[3] Figma, *Figma Help Center — Official Documentation*. [Online]. Available: https://help.figma.com/\\[4pt]
+[4] YouTube, *UI/UX Prototyping Tutorials*, 2025. [Online]. Available: https://www.youtube.com/
+
+\end{flushleft}
+\end{spacing}
+
+
+
+
+\end{document}
