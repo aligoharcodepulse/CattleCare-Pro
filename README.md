@@ -2,6 +2,7 @@
 
 A modern and intelligent livestock management system designed to transform traditional farm monitoring into a smart, secure, and efficient digital solution.
 
+
    ██████╗ █████╗ ████████╗████████╗██╗     ███████╗ ██████╗ █████╗ ██████╗ ███████╗
   ██╔════╝██╔══██╗╚══██╔══╝╚══██╔══╝██║     ██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝
   ██║     ███████║   ██║      ██║   ██║     █████╗  ██║     ███████║██████╔╝█████╗  
@@ -10,22 +11,31 @@ A modern and intelligent livestock management system designed to transform tradi
    ╚═════╝╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚══════╝╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝  
 
 
+
 📋 Project Overview
 
 CattleCare-Pro is a smart livestock monitoring system that replaces manual observation with automated tracking, monitoring, and reporting.
 The system provides a centralized admin dashboard to oversee cattle movement, grazing boundaries, shelter conditions, and unusual behavioral activities such as fights or security breaches.
 
 By eliminating manual workload and potential information loss, CattleCare-Pro empowers farm owners with real-time insights, organized data, and improved operational decision-making.
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 🚀 Key Features
 ✔️ Real-time Cattle Tracking – Monitor cattle location and ensure they remain within safe zones.
+
 ✔️ Shelter Monitoring – Track shelter temperature, security, occupancy, and safety conditions.
+
 ✔️ Activity Alerts – Detect abnormal activities such as cattle fights or sudden movements.
+
 ✔️ Digital Farm Records – Maintain accurate, organized cattle information effortlessly.
+
 ✔️ Admin Dashboard – A unified panel for monitoring all farm operations.
+
 ✔️ Reduced Manual Workload – Automates tasks traditionally done through manual observation.
+
 ✔️ Better Decision Making – Real-time insights for improved farm management.
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 🧑‍🤝‍🧑 Group Details
@@ -53,6 +63,7 @@ RP/Supervisor: Dr. Shafiq Ur Rehman
 
 🔗 Meeting Images
 ➡️ https://github.com/aligoharcodepulse/CattleCare-Pro/tree/main/Meeting_Images
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 📝 Project Summary
@@ -62,6 +73,7 @@ CattleCare-Pro introduces a technological upgrade to traditional livestock manag
 Farm owners can track each animal’s movement while they graze, maintain organized digital records, and monitor shelter security with ease. The system enhances productivity, reduces risks, prevents information loss, and ensures cattle remain within safe boundaries through smart alerts and monitoring.
 
 By digitizing essential farm operations, CattleCare-Pro offers enhanced efficiency, safety, and smarter decision-making for livestock management.
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 🛠️ Tech Stack
@@ -77,12 +89,14 @@ IoT Hardware: GPS Module, Motion Sensors
 Cloud: Firebase
 
 Security: JWT / Firebase Auth
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 🤝 Contributing
 
 We welcome ideas, improvements, and recommendations.
 Feel free to open issues or submit PRs.
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 ⭐ Support
