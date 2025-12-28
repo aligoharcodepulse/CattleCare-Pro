@@ -1,0 +1,297 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{parskip}
+\usepackage{tikz}
+\usepackage{everypage}
+\usepackage{float}
+
+\AddEverypageHook{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \draw[line width=1pt]
+            ($(current page.north west) + (1cm,-1cm)$)
+            rectangle
+            ($(current page.south east) + (-1cm,1cm)$);
+    \end{tikzpicture}
+}
+
+\setcounter{secnumdepth}{2}
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+
+% ================= TITLE PAGE =================
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+
+\includegraphics[width=4cm]{logo.png}\par\vspace{1cm}
+
+{\Large \textbf{NAMAL UNIVERSITY MIANWALI}}\\
+{\large \textbf{Department of Computer Science}}\\[1.5cm]
+
+{\Huge \textbf{Semester Project (Milestone 2)}}\\[0.5cm]
+{\LARGE \textbf{CattleCare Pro}}\\[1cm]
+
+{\large \textbf{Subject: Software Engineering}}\\[1cm]
+
+\begin{tabular}{ >{\bfseries}l  l }
+Student 1: & Muhammad Ali \\
+Reg No: & NUM-BSCS-2024-46 \\[4pt]
+
+Student 2: & Muhammad Ahmad \\
+Reg No: & NUM-BSCS-2024-45 \\[4pt]
+
+Student 3: & Aliya Ashraf \\
+Reg No: & NUM-BSCS-2024-08 \\
+\end{tabular}
+
+\vfill
+
+\textbf{Submitted To:}\\
+Ms. Asiya Batool
+
+\vspace{1cm}
+
+\textbf{Submission Date:} \today
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ================= INTRODUCTION =================
+\section{Introduction}
+
+\subsection{Purpose}
+\begin{spacing}{1.5}
+The purpose of this Software Requirements Specification (SRS) document is to provide a complete and detailed description of the requirements for the \textbf{CattleCare Pro} system. This document aims to clearly define system behavior, functional capabilities, performance constraints, and user interactions. It serves as a formal reference for developers, project supervisors, and evaluators to ensure that the developed system fulfills all intended objectives and stakeholder expectations. Additionally, this document helps in minimizing ambiguity during system development by providing a clear understanding of how the system should operate under different conditions.
+\end{spacing}
+
+\subsection{Scope}
+\begin{spacing}{1.5}
+CattleCare Pro is a smart livestock monitoring and management system designed to address the challenges faced by cattle farmers in monitoring animal location, and daily activities. Traditional cattle management methods rely heavily on manual observation, which is time-consuming, error-prone, and inefficient. This system automates cattle monitoring by integrating GPS collars, cameras, and cloud computing. The system provides real-time tracking, automated alerts, and analytical reports, ultimately improving farm productivity, reducing cattle loss, and supporting informed decision-making. All collected data is securely stored on cloud servers, enabling authorized users to access real-time information from any location using a mobile application.
+\end{spacing}
+
+\subsection{Definitions, Acronyms, and Abbreviations}
+\begin{spacing}{1.5}
+\begin{itemize}
+\item \textbf{GPS}: Global Positioning System
+\item \textbf{FRs}: Functional Requirements
+\item \textbf{SRS}: Software Requirements Specification
+\item \textbf{Admin}: System Administrator (Farm Owner)
+\item \textbf{NFRs}: Non-Functional Requirements
+\end{itemize}
+\end{spacing}
+
+\newpage
+\subsection{References}
+\begin{spacing}{1.5}
+\begin{itemize}
+\item IEEE Std 830-1998, IEEE Recommended Practice for Software Requirements Specifications
+\item Course Material: Software Engineering, Namal University
+\end{itemize}
+\end{spacing}
+
+\subsection{Overview}
+\begin{spacing}{1.5}
+This document is organized according to IEEE SRS guidelines. Section 2 provides an overall description of the system, including system architecture, users, and constraints. Section 3 defines detailed functional and non-functional requirements such as login, authentication, cloud storage, and analytics. Appendices include supporting diagrams that visually represent system interactions.
+\end{spacing}
+
+% ================= OVERALL DESCRIPTION =================
+\section{Overall Description}
+
+\subsection{Product Perspective}
+\begin{spacing}{1.5}
+CattleCare Pro is a standalone software system that operates through the integration of
+hardware devices, cloud infrastructure, and mobile applications. Each cattle animal is
+equipped with a GPS-enabled collar that continuously transmits location and activity
+data to a centralized cloud server. The system processes this data and presents it to
+users via a mobile application. The system does not replace existing farm operations but
+enhances them through automation and data-driven insights.
+\end{spacing}
+
+\subsection{System Architecture Overview}
+\begin{spacing}{1.5}
+The architecture of CattleCare Pro follows a layered and cloud-centric design to ensure scalability, reliability, and real-time performance. The system consists of four major layers: data collection layer, cloud processing layer, application layer, and analytics layer.
+
+At the data collection layer, GPS-enabled collars and cameras are attached to cattle to continuously capture location, movement, and visual data. These devices act as primary data sources and transmit readings wirelessly to the cloud infrastructure. The cloud layer is responsible for securely storing all incoming data, performing preprocessing, and ensuring synchronization across the system.
+
+The application layer provides user interaction through a mobile application, allowing farm owners, and workers to access real-time and historical data. Finally, the analytics layer integrates Power BI to transform raw cattle data into meaningful insights using graphs, charts, and dashboards. This layered architecture ensures efficient data flow, fault tolerance, and future extensibility.
+\end{spacing}
+
+\begin{spacing}{1.5}
+CattleCare Pro is a standalone software system that operates through the integration of hardware devices, cloud infrastructure, and mobile applications. Each cattle animal is equipped with a GPS-enabled collar that continuously transmits location and activity data to a centralized cloud server. The cloud platform stores, processes, and synchronizes data in real time, allowing users to securely access updated information. The system also integrates Power BI as an analytics tool to convert raw cattle data into meaningful dashboards, charts, and visual reports for effective farm monitoring.
+\end{spacing}
+
+\subsection{Product Functions}
+\begin{spacing}{1.5}
+The major functions of CattleCare Pro include:
+\begin{itemize}
+\item  Continuous tracking of cattle location using GPS technology
+\item  Monitoring of cattle movement and activity patterns
+\item  Detection of abnormal behavior indicating possible theft
+\item Generation of real-time alerts and notifications
+\item  Secure storage of historical data for analysis
+\item  Visualization of data through graphs and reports
+\end{itemize}
+\end{spacing}
+
+\newpage
+\subsection{Role of Cloud Computing}
+\begin{spacing}{1.5}
+Cloud computing plays a central role in the CattleCare Pro system by acting as a unified platform for data storage, processing, and access. All data collected from GPS collars, cameras, and user interactions is transmitted to cloud servers in real time. This eliminates the need for local storage and reduces the risk of data loss.
+
+The cloud enables authorized users to access cattle data from anywhere at any time using the internet. It also supports scalability by allowing the system to handle an increasing number of cattle, users, and data records without performance degradation. Moreover, cloud-based security mechanisms such as encryption, access control, and authentication ensure that sensitive farm data remains protected.
+
+By leveraging cloud services, CattleCare Pro ensures high availability, efficient data management, and seamless integration with analytics tools such as Power BI.
+\end{spacing}
+
+\begin{spacing}{1.5}
+The major functions of CattleCare Pro include:
+\begin{itemize}
+\item Secure user login and authentication for authorized system access
+\item Continuous tracking of cattle location using GPS technology
+\item Monitoring of cattle movement and activity patterns
+\item Detection of abnormal behavior indicating possible theft 
+\item Cloud-based storage of cattle activity data
+\item Real-time access to cattle data through mobile application
+\item Data visualization and analytics using Power BI dashboards
+\item Generation of real-time alerts and notifications
+\item Secure storage of historical data for analysis
+\item Visualization of data through graphs and reports
+\end{itemize}
+\end{spacing}
+
+\subsection{Detailed User Interaction}
+\begin{spacing}{1.5}
+Different users interact with the CattleCare Pro system according to their roles and responsibilities. The Farm Owner is the primary user who has full access to system features. This includes managing cattle records, viewing real-time location, monitoring analytics dashboards, and receiving notifications regarding abnormal activities.
+
+Farm workers do not have direct access to the system. Their role is limited to supporting the Farm Owner/Admin by sharing relevant farm data and observations, which are manually entered or managed within the system by authorized user.
+
+The System Administrator manages backend operations such as user accounts, device configuration, and cloud security. This role ensures that the system operates smoothly and securely without disruption.
+\end{spacing}
+
+\begin{spacing}{1.5}
+The system supports multiple user types with varying technical expertise. These user groups and their characteristics are shown in Table.
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{3cm}|p{3cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{User Type} & \textbf{Technical Level} & \textbf{Responsibilities} & \textbf{System Usage} \\
+\hline
+Farm Owner & Basic & Farm supervision & Monitor cattle, receive alerts, view reports \\
+\hline
+Farm Worker & Low & Daily cattle handling & Share information with farm owner \\
+\hline
+System Admin & High & System maintenance & Manage users, devices, cloud and security \\
+\hline
+\end{tabular}
+\end{table}
+\end{spacing}
+
+\subsection{Constraints}
+\begin{spacing}{1.5}
+\begin{itemize}
+\item Continuous internet connectivity is required for real-time monitoring
+\item System accuracy depends on sensor reliability
+\newpage
+\item Hardware installation must follow safety standards
+\item Power BI analytics depends on availability of cloud services
+\end{itemize}
+\end{spacing}
+
+\subsection{Assumptions and Dependencies}
+\begin{spacing}{1.5}
+\begin{itemize}
+\item Users possess smartphones with internet access
+\item Hardware devices remain operational in farm environments
+\item Cloud services provide uninterrupted availability
+\item Users will use valid login credentials for system access
+\end{itemize}
+\end{spacing}
+
+% ================= SPECIFIC REQUIREMENTS =================
+\section{Specific Requirements}
+
+\subsection{Functional Requirements}
+\begin{spacing}{1.5}
+\begin{itemize}
+\item \textbf{FR-01}: The system shall allow users (Farm Owner/Admin) to register and log in using secure authentication credentials.
+\item \textbf{FR-02}: The system shall authenticate users before granting access to system features.
+\item \textbf{FR-03}: The system shall track real-time cattle location using GPS collars.
+\item \textbf{FR-04}: The system shall monitor cattle activity and detect anomalies.
+\item \textbf{FR-05}: The system shall store historical cattle data securely on cloud servers.
+\item \textbf{FR-06}: The system shall allow real-time access to cattle data via mobile application.
+\item \textbf{FR-07}: The system shall generate alerts for abnormal behavior or location deviation.
+\item \textbf{FR-08}: The system shall analyze data and generate graphs and dashboards using Power BI.
+\item \textbf{FR-09}: The system shall generate daily, weekly, and monthly analytical reports.
+\end{itemize}
+\end{spacing}
+
+\subsection{Non-Functional Requirements}
+\begin{spacing}{1.5}
+\textbf{Privacy}: The system shall ensure that only authorized users can access cattle and farm data, maintaining confidentiality at all times.
+
+\textbf{Ease of Use}: The user interface shall be simple, intuitive, and easy to navigate, even for users with minimal technical knowledge.
+
+\textbf{Password Recovery}: The system shall provide a secure mechanism for password reset and recovery in case users forget their credentials.
+
+\textbf{Interface Design}: The front-end design shall be responsive and optimized for mobile devices to ensure accessibility in farm environments.
+
+\textbf{Maintainability}: The system architecture shall support easy updates and maintenance without affecting existing functionality.
+
+These non-functional aspects ensure that CattleCare Pro remains user-friendly, secure, and reliable throughout its lifecycle.
+\end{spacing}
+
+\begin{spacing}{1.5}
+\begin{itemize}
+\item \textbf{Usability}: The system shall be easy to use for non-technical users.
+\item \textbf{Security}: The system shall protect user data through secure login, authentication, and cloud encryption.
+\item \textbf{Reliability}: The system shall operate continuously with minimal downtime.
+\item \textbf{Scalability}: The system shall support future expansion in users, cattle, and data volume.
+\item \textbf{Performance}: The system shall process and display real-time data and Power BI analytics within 2 seconds of reception.
+\end{itemize}
+\end{spacing}
+
+\subsection{References}
+\begin{spacing}{1.5}
+\begin{flushleft}
+[1] Requirement Provider Interview, Personal communication, Dec. 2025.
+\end{flushleft}
+\end{spacing}
+
+
+% ================= APPENDICES =================
+\section{Appendices}
+\subsection{Appendix Overview}
+\begin{spacing}{1.5}
+This appendix section provides supplementary material to support the understanding of the CattleCare Pro system. It includes visual diagrams and detailed explanations that illustrate system interactions, data flow, and user behavior. The diagrams presented in this section help in visualizing how different system components work together to achieve project objectives.
+\end{spacing}
+
+\subsection{Context Diagram}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{context_diagram.jpg}
+\caption{Context Diagram of CattleCare Pro}
+\end{figure}
+
+
+\begin{spacing}{1.5}
+The context diagram represents the interaction between the CattleCare Pro System and its external entities. The Farm Owner/Admin interacts with the system to submit monitoring requests and receive cattle location data, alerts, and analytical reports. The System Admin manages system users, connected devices, and monitors system health logs. Sensors continuously provide real-time location and activity data to the system. The Cloud Server is used for secure storage and processing of historical cattle data. Only external entities that directly exchange data with the system are included in the context diagram, ensuring consistency with the system scope defined in the SRS.
+\end{spacing}
+
+\subsection{Use Case Diagram}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{UseCase.jpg}
+\caption{Use Case Diagram of CattleCare Pro}
+\end{figure}
+\begin{spacing}{1.5}
+The use case diagram represents the functional interactions of the CattleCare Pro system. The Farm Owner/Admin is the primary actor who interacts with the system to monitor cattle location, health status, view analytical reports, and receive alerts. The System Admin is responsible for managing system users, connected devices, and ensuring secure cloud data storage. Farm workers do not interact directly with the system and are therefore excluded from the use case diagram. External components such as sensors and cloud services are treated as supporting infrastructure and are not represented as actors in the use case diagram in accordance with UML standards.
+\end{spacing}
+
+\end{document}
