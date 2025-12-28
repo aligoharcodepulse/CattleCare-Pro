@@ -1,5 +1,4 @@
 \documentclass[12pt,a4paper]{report}
-
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{setspace}
@@ -7,8 +6,13 @@
 \usepackage{ragged2e}
 \usepackage{parskip}
 \usepackage{tikz}
+\usetikzlibrary{calc}
 \usepackage{everypage}
 \usepackage{float}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
 
 \AddEverypageHook{%
     \begin{tikzpicture}[remember picture,overlay]
@@ -19,8 +23,15 @@
     \end{tikzpicture}
 }
 
-\setcounter{secnumdepth}{2}
-\renewcommand{\thesection}{\arabic{section}}
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{CattleCare Pro SRS}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
 
 \begin{document}
 
@@ -29,269 +40,1155 @@
 \centering
 \vspace*{1cm}
 
-\includegraphics[width=4cm]{logo.png}\par\vspace{1cm}
+{\Huge \textbf{Software Requirements Specification}}\\[0.5cm]
+{\LARGE \textbf{CattleCare Pro}}\\[2cm]
 
-{\Large \textbf{NAMAL UNIVERSITY MIANWALI}}\\
-{\large \textbf{Department of Computer Science}}\\[1.5cm]
+{\large IEEE Std 830-1998 Compliant Document}\\[2cm]
 
-{\Huge \textbf{Semester Project (Milestone 2)}}\\[0.5cm]
-{\LARGE \textbf{CattleCare Pro}}\\[1cm]
+\textbf{Department of Computer Science}\\
+Namal University Mianwali\\[1.9cm]
 
-{\large \textbf{Subject: Software Engineering}}\\[1cm]
-
-\begin{tabular}{ >{\bfseries}l  l }
-Student 1: & Muhammad Ali \\
-Reg No: & NUM-BSCS-2024-46 \\[4pt]
-
-Student 2: & Muhammad Ahmad \\
-Reg No: & NUM-BSCS-2024-45 \\[4pt]
-
-Student 3: & Aliya Ashraf \\
-Reg No: & NUM-BSCS-2024-08 \\
+\textbf{Prepared By:}\\[0.3cm]
+\begin{tabular}{ll}
+Muhammad Ali & NUM-BSCS-2024-46\\
+Muhammad Ahmad & NUM-BSCS-2024-45\\
+Aliya Ashraf & NUM-BSCS-2024-08
 \end{tabular}
 
 \vfill
 
-\textbf{Submitted To:}\\
-Ms. Asiya Batool
-
-\vspace{1cm}
-
 \textbf{Submission Date:} \today
+
+\textbf{Document Status:} Final Draft\\
+\textbf{Submitted to:} Ms. Asiya Batool
 \end{titlepage}
 
 \tableofcontents
 \newpage
 
-% ================= INTRODUCTION =================
-\section{Introduction}
-
-\subsection{Purpose}
-\begin{spacing}{1.5}
-The purpose of this Software Requirements Specification (SRS) document is to provide a complete and detailed description of the requirements for the \textbf{CattleCare Pro} system. This document aims to clearly define system behavior, functional capabilities, performance constraints, and user interactions. It serves as a formal reference for developers, project supervisors, and evaluators to ensure that the developed system fulfills all intended objectives and stakeholder expectations. Additionally, this document helps in minimizing ambiguity during system development by providing a clear understanding of how the system should operate under different conditions.
-\end{spacing}
-
-\subsection{Scope}
-\begin{spacing}{1.5}
-CattleCare Pro is a smart livestock monitoring and management system designed to address the challenges faced by cattle farmers in monitoring animal location, and daily activities. Traditional cattle management methods rely heavily on manual observation, which is time-consuming, error-prone, and inefficient. This system automates cattle monitoring by integrating GPS collars, cameras, and cloud computing. The system provides real-time tracking, automated alerts, and analytical reports, ultimately improving farm productivity, reducing cattle loss, and supporting informed decision-making. All collected data is securely stored on cloud servers, enabling authorized users to access real-time information from any location using a mobile application.
-\end{spacing}
-
-\subsection{Definitions, Acronyms, and Abbreviations}
-\begin{spacing}{1.5}
-\begin{itemize}
-\item \textbf{GPS}: Global Positioning System
-\item \textbf{FRs}: Functional Requirements
-\item \textbf{SRS}: Software Requirements Specification
-\item \textbf{Admin}: System Administrator (Farm Owner)
-\item \textbf{NFRs}: Non-Functional Requirements
-\end{itemize}
-\end{spacing}
-
+\listoftables
 \newpage
-\subsection{References}
+
+% ======================================================
+\chapter{Introduction}
 \begin{spacing}{1.5}
+
+\section{Purpose}
+\subsection{Document Purpose}
+This Software Requirements Specification (SRS) document provides a complete and precise description of the requirements for the CattleCare Pro livestock monitoring and management system. This document has been prepared in strict accordance with IEEE Std 830-1998, "IEEE Recommended Practice for Software Requirements Specifications," to ensure clarity, completeness, and verifiability of all stated requirements.
+
+The primary purposes of this document are to:
 \begin{itemize}
+\item Define all functional and non-functional requirements for the CattleCare Pro system
+\item Establish a contractual foundation between stakeholders and developers
+\item Provide a reference for validation and verification activities
+\item Serve as a basis for cost estimation and project planning
+\item Guide system design and implementation decisions
+\end{itemize}
+
+\subsection{Intended Audience and Reading Suggestions}
+This SRS is intended for multiple stakeholders, each with specific interests:
+
+\subsubsection{Software Developers and Engineers}
+Developers will use this document as the primary reference for understanding what functionality must be implemented. Section 3 (Specific Requirements) contains detailed technical specifications that should be consulted throughout the development lifecycle.
+
+\subsubsection{Project Managers and Supervisors}
+Project managers will use this document to plan resources, estimate costs, and schedule development milestones. The product scope (Section 1.3) and constraints (Section 2.6) are particularly relevant for project planning purposes.
+
+\subsubsection{Quality Assurance and Testing Teams}
+QA teams will use this SRS to develop test plans, test cases, and validation criteria. Every requirement in this document is written to be verifiable, meaning that test procedures can be designed to objectively determine whether each requirement has been satisfied.
+
+\subsubsection{Academic Evaluators}
+Faculty members and academic evaluators will use this document to assess the completeness and quality of the requirements engineering process, as well as compliance with IEEE standards and software engineering best practices.
+
+\subsubsection{Farm Owners and Stakeholders}
+End users and farm management personnel will use sections 1 and 2 to understand the system's capabilities, limitations, and expected benefits.
+
+\subsection{Product Scope}
+\subsubsection{Product Name and Identity}
+The software product specified in this document is named \textbf{CattleCare Pro}, a comprehensive livestock monitoring and management system designed specifically for cattle farming operations.
+
+\subsubsection{Product Benefits and Objectives}
+CattleCare Pro aims to revolutionize cattle farming through technology-enabled monitoring and data-driven decision making. The primary benefits include:
+
+\paragraph{Enhanced Animal Welfare}
+By providing real-time monitoring of cattle location and activity patterns, the system enables farmers to quickly identify animals in distress, detect health issues early, and respond promptly to emergency situations.
+
+\paragraph{Operational Efficiency}
+The system automates many time-consuming manual tasks such as counting animals, monitoring their locations, and tracking their movements, freeing farm workers to focus on higher-value activities.
+
+\paragraph{Data-Driven Decision Making}
+Historical data analytics and trend analysis empower farm managers to make informed decisions about feeding schedules, breeding programs, and veterinary interventions based on objective data.
+
+\paragraph{Theft Prevention and Security}
+GPS tracking and geofencing capabilities help prevent cattle theft, a significant problem in many agricultural regions. The system can alert owners immediately when animals move beyond designated boundaries.
+
+\subsubsection{Product Scope Boundaries}
+\paragraph{Within Scope}
+\begin{itemize}
+\item Real-time GPS tracking of individual cattle
+\item Activity monitoring and behavior pattern analysis
+\item Automated anomaly detection and alert generation
+\item Cloud-based data storage and management
+\item Mobile application for Android platforms
+\item Analytics dashboards using Power BI
+\item User authentication and access control
+\item Historical data analysis and trend identification
+\end{itemize}
+
+\paragraph{Outside Scope}
+\begin{itemize}
+\item Veterinary diagnosis or medical treatment recommendations
+\item Automated feeding systems or equipment control
+\item Financial management or accounting functions
+\item Integration with existing legacy farm management systems (initial version)
+\end{itemize}
+
+\section{Document Conventions}
+\subsection{Requirement Priority and Necessity}
+This SRS follows IEEE recommended conventions for expressing requirements:
+
+\subsubsection{Mandatory Requirements}
+Requirements expressed using the keyword \textbf{shall} are mandatory and must be implemented exactly as specified. For example: "The system shall authenticate users before granting access."
+
+\subsubsection{Desirable Requirements}
+Requirements expressed using \textbf{should} are highly desirable but not absolutely mandatory. For example: "The system should provide data export capabilities in multiple formats."
+
+\subsubsection{Optional Requirements}
+Requirements expressed using \textbf{may} are optional features that could enhance the system but are not required for basic operation.
+
+\subsection{Typographical Conventions}
+\begin{itemize}
+\item \textbf{Bold text} is used for requirement keywords (shall, should, may) and emphasis
+\item \textit{Italic text} is used for document references and technical terminology
+\item \texttt{Monospace font} is used for system messages and technical identifiers
+\item ALL CAPS is used for acronyms and abbreviations
+\end{itemize}
+
+\subsection{Requirement Labeling Convention}
+Each specific requirement is assigned a unique identifier:
+\begin{itemize}
+\item FR-XX: Functional Requirements
+\item NFR-XX: Non-Functional Requirements
+\item IR-XX: Interface Requirements
+\item DR-XX: Design Constraint Requirements
+\end{itemize}
+
+\section{Definitions, Acronyms, and Abbreviations}
+\subsection{Definitions}
+\paragraph{Anomaly}
+Any deviation from normal cattle behavior patterns as determined by the system's algorithms.
+
+\paragraph{Cloud Platform}
+Remote server infrastructure accessed via the internet that provides data storage and processing capabilities.
+
+\paragraph{GPS Collar}
+GPS-enabled hardware device attached to cattle that collects location and movement data.
+
+\paragraph{Dashboard}
+Visual interface displaying key metrics, charts, and summary information about cattle status.
+
+\paragraph{Farm Administrator}
+Primary system user with full access privileges, typically the farm owner or manager.
+
+\paragraph{Geofence}
+Virtual boundary defined by GPS coordinates that creates a designated area.
+
+\paragraph{Real-time}
+Information processing and display occurring with minimal delay (typically less than 5 seconds).
+
+\subsection{Acronyms}
+\begin{longtable}{|p{3cm}|p{10cm}|}
+\hline
+\textbf{Acronym} & \textbf{Definition} \\ \hline
+API & Application Programming Interface \\ \hline
+GPS & Global Positioning System \\ \hline
+HTTPS & Hypertext Transfer Protocol Secure \\ \hline
+IEEE & Institute of Electrical and Electronics Engineers \\ \hline
+IoT & Internet of Things \\ \hline
+JSON & JavaScript Object Notation \\ \hline
+SMS & Short Message Service \\ \hline
+SRS & Software Requirements Specification \\ \hline
+UI & User Interface \\ \hline
+UX & User Experience \\ \hline
+\end{longtable}
+
+\section{References}
+\begin{enumerate}
 \item IEEE Std 830-1998, IEEE Recommended Practice for Software Requirements Specifications
-\item Course Material: Software Engineering, Namal University
-\end{itemize}
+\item Course Material — Software Engineering, Namal University, Fall 2025
+\end{enumerate}
+
+\section{Overview}
+The remainder of this SRS is organized as follows:
+
+\textbf{Chapter 2: Overall Description} provides high-level context including product perspective, functions, user characteristics, constraints, and assumptions.
+
+\textbf{Chapter 3: Specific Requirements} contains detailed functional and non-functional requirements with unique identifiers.
+
+\textbf{Chapter 4: System Models} presents visual representations including use case diagrams, and context diagrams.
+
+\textbf{Chapter 5: Appendices} contains supporting information and additional documentation.
+
 \end{spacing}
 
-\subsection{Overview}
+% ======================================================
+\chapter{Overall Description}
 \begin{spacing}{1.5}
-This document is organized according to IEEE SRS guidelines. Section 2 provides an overall description of the system, including system architecture, users, and constraints. Section 3 defines detailed functional and non-functional requirements such as login, authentication, cloud storage, and analytics. Appendices include supporting diagrams that visually represent system interactions.
-\end{spacing}
 
-% ================= OVERALL DESCRIPTION =================
-\section{Overall Description}
+\section{Product Perspective}
+CattleCare Pro is a new, self-contained software system designed specifically for livestock monitoring and management. The system integrates multiple technology components:
 
-\subsection{Product Perspective}
-\begin{spacing}{1.5}
-CattleCare Pro is a standalone software system that operates through the integration of
-hardware devices, cloud infrastructure, and mobile applications. Each cattle animal is
-equipped with a GPS-enabled collar that continuously transmits location and activity
-data to a centralized cloud server. The system processes this data and presents it to
-users via a mobile application. The system does not replace existing farm operations but
-enhances them through automation and data-driven insights.
-\end{spacing}
-
-\subsection{System Architecture Overview}
-\begin{spacing}{1.5}
-The architecture of CattleCare Pro follows a layered and cloud-centric design to ensure scalability, reliability, and real-time performance. The system consists of four major layers: data collection layer, cloud processing layer, application layer, and analytics layer.
-
-At the data collection layer, GPS-enabled collars and cameras are attached to cattle to continuously capture location, movement, and visual data. These devices act as primary data sources and transmit readings wirelessly to the cloud infrastructure. The cloud layer is responsible for securely storing all incoming data, performing preprocessing, and ensuring synchronization across the system.
-
-The application layer provides user interaction through a mobile application, allowing farm owners, and workers to access real-time and historical data. Finally, the analytics layer integrates Power BI to transform raw cattle data into meaningful insights using graphs, charts, and dashboards. This layered architecture ensures efficient data flow, fault tolerance, and future extensibility.
-\end{spacing}
-
-\begin{spacing}{1.5}
-CattleCare Pro is a standalone software system that operates through the integration of hardware devices, cloud infrastructure, and mobile applications. Each cattle animal is equipped with a GPS-enabled collar that continuously transmits location and activity data to a centralized cloud server. The cloud platform stores, processes, and synchronizes data in real time, allowing users to securely access updated information. The system also integrates Power BI as an analytics tool to convert raw cattle data into meaningful dashboards, charts, and visual reports for effective farm monitoring.
-\end{spacing}
-
-\subsection{Product Functions}
-\begin{spacing}{1.5}
-The major functions of CattleCare Pro include:
+\subsection{Hardware Components}
 \begin{itemize}
-\item  Continuous tracking of cattle location using GPS technology
-\item  Monitoring of cattle movement and activity patterns
-\item  Detection of abnormal behavior indicating possible theft
-\item Generation of real-time alerts and notifications
-\item  Secure storage of historical data for analysis
-\item  Visualization of data through graphs and reports
+\item \textbf{GPS Collar Devices:} Wearable IoT devices attached to cattle that collect location and movement data
+\item \textbf{Mobile Devices:} Android smartphones and tablets used by farm personnel
+\item \textbf{Cameras:} Visual monitoring equipment for enhanced surveillance
 \end{itemize}
-\end{spacing}
 
-\newpage
-\subsection{Role of Cloud Computing}
-\begin{spacing}{1.5}
-Cloud computing plays a central role in the CattleCare Pro system by acting as a unified platform for data storage, processing, and access. All data collected from GPS collars, cameras, and user interactions is transmitted to cloud servers in real time. This eliminates the need for local storage and reduces the risk of data loss.
-
-The cloud enables authorized users to access cattle data from anywhere at any time using the internet. It also supports scalability by allowing the system to handle an increasing number of cattle, users, and data records without performance degradation. Moreover, cloud-based security mechanisms such as encryption, access control, and authentication ensure that sensitive farm data remains protected.
-
-By leveraging cloud services, CattleCare Pro ensures high availability, efficient data management, and seamless integration with analytics tools such as Power BI.
-\end{spacing}
-
-\begin{spacing}{1.5}
-The major functions of CattleCare Pro include:
+\subsection{Software Components}
 \begin{itemize}
-\item Secure user login and authentication for authorized system access
-\item Continuous tracking of cattle location using GPS technology
-\item Monitoring of cattle movement and activity patterns
-\item Detection of abnormal behavior indicating possible theft 
-\item Cloud-based storage of cattle activity data
-\item Real-time access to cattle data through mobile application
-\item Data visualization and analytics using Power BI dashboards
-\item Generation of real-time alerts and notifications
-\item Secure storage of historical data for analysis
-\item Visualization of data through graphs and reports
+\item \textbf{Cloud Backend Services:} Server applications that process data and manage storage
+\item \textbf{Mobile Application:} Native Android app providing user interface
+\item \textbf{Analytics Platform:} Power BI integration for data visualization
 \end{itemize}
-\end{spacing}
 
-\subsection{Detailed User Interaction}
-\begin{spacing}{1.5}
-Different users interact with the CattleCare Pro system according to their roles and responsibilities. The Farm Owner is the primary user who has full access to system features. This includes managing cattle records, viewing real-time location, monitoring analytics dashboards, and receiving notifications regarding abnormal activities.
+\subsection{Communication Infrastructure}
+\begin{itemize}
+\item \textbf{Cellular Networks:} 4G connectivity for data transmission
+\item \textbf{WiFi Networks:} Local wireless connectivity for mobile devices
+\item \textbf{Internet Connectivity:} Broadband connection for cloud service access
+\end{itemize}
 
-Farm workers do not have direct access to the system. Their role is limited to supporting the Farm Owner/Admin by sharing relevant farm data and observations, which are manually entered or managed within the system by authorized user.
+\section{Product Functions}
+The major functions of CattleCare Pro include:
 
-The System Administrator manages backend operations such as user accounts, device configuration, and cloud security. This role ensures that the system operates smoothly and securely without disruption.
-\end{spacing}
+\subsection{Real-Time Cattle Tracking}
+The system shall continuously monitor and display the current location of all cattle equipped with GPS collars, enabling:
+\begin{itemize}
+\item View cattle locations on interactive maps
+\item Track movement patterns throughout the day
+\item Identify exact positions during emergencies
+\item Verify animals remain within designated areas
+\end{itemize}
 
-\begin{spacing}{1.5}
-The system supports multiple user types with varying technical expertise. These user groups and their characteristics are shown in Table.
+\subsection{Activity Monitoring and Analysis}
+The system shall analyze movement data to understand cattle behavior:
+\begin{itemize}
+\item Detect periods of activity versus rest
+\item Identify unusual behavior patterns indicating health issues
+\item Track grazing patterns and feeding behavior
+\item Monitor reproductive behavior indicators
+\end{itemize}
+
+\subsection{Anomaly Detection and Alerting}
+The system shall automatically identify abnormal situations:
+\begin{itemize}
+\item Cattle leaving designated areas (geofence violations)
+\item Extended periods of inactivity suggesting illness
+\item Unusual movement patterns
+\item Device malfunctions or connectivity loss
+\end{itemize}
+
+\subsection{Data Storage and Management}
+All collected data shall be securely stored in cloud infrastructure with:
+\begin{itemize}
+\item Redundancy to prevent data loss
+\item Encryption to protect privacy
+\item Retention of historical data for trend analysis
+\item Efficient retrieval mechanisms
+\end{itemize}
+
+\subsection{Analytics and Reporting}
+The system shall provide sophisticated analysis capabilities:
+\begin{itemize}
+\item Historical trend analysis using Power BI
+\item Comparative analysis between animals or groups
+\item Customizable reports for different needs
+\item Visual dashboards showing key performance indicators
+\item Export capabilities for external analysis
+\end{itemize}
+
+\subsection{User Management}
+The system shall provide secure authentication and authorization:
+\begin{itemize}
+\item User account creation and management
+\item Role-based access control
+\item Password management and recovery
+\item Audit logging of user actions
+\end{itemize}
+
+\section{User Classes and Characteristics}
+
+\subsection{Farm Owner / Administrator}
+\subsubsection{Characteristics}
+\begin{itemize}
+\item \textbf{Technical Skill Level:} Basic to intermediate
+\item \textbf{Age Range:} 30-60 years
+\item \textbf{Usage Frequency:} Daily, multiple times per day
+\item \textbf{Primary Device:} Mobile phone
+\end{itemize}
+
+\subsubsection{Responsibilities}
+\begin{itemize}
+\item Monitor overall herd health and status
+\item Make strategic decisions based on system data
+\item Respond to critical alerts
+\item Configure system settings
+\item Generate reports for business purposes
+\end{itemize}
+
+\subsection{Farm Worker}
+\subsubsection{Characteristics}
+\begin{itemize}
+\item \textbf{Technical Skill Level:} Basic
+\item \textbf{Age Range:} 20-50 years
+\item \textbf{Usage Frequency:} Daily during work hours
+\item \textbf{Role:} Indirect - provides information to Farm Owner
+\end{itemize}
+
+\subsubsection{Responsibilities}
+\begin{itemize}
+\item Observe cattle during field rounds
+\item Report observations to administrator
+\item Assist in physical cattle management
+\end{itemize}
+
+\subsection{System Administrator}
+\subsubsection{Characteristics}
+\begin{itemize}
+\item \textbf{Technical Skill Level:} Advanced
+\item \textbf{Age Range:} 25-45 years
+\item \textbf{Usage Frequency:} As needed for maintenance
+\end{itemize}
+
+\subsubsection{Responsibilities}
+\begin{itemize}
+\item System installation and configuration
+\item User account management
+\item Database maintenance and backups
+\item Security monitoring
+\item Performance optimization
+\item Technical support
+\end{itemize}
+
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{3cm}|p{3cm}|p{4cm}|p{4cm}|}
+\caption{User Class Comparison}
+\begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4cm}|}
 \hline
-\textbf{User Type} & \textbf{Technical Level} & \textbf{Responsibilities} & \textbf{System Usage} \\
-\hline
-Farm Owner & Basic & Farm supervision & Monitor cattle, receive alerts, view reports \\
-\hline
-Farm Worker & Low & Daily cattle handling & Share information with farm owner \\
-\hline
-System Admin & High & System maintenance & Manage users, devices, cloud and security \\
-\hline
+\textbf{User Class} & \textbf{Skill Level} & \textbf{Primary Device} & \textbf{Key Requirements} \\ \hline
+Farm Owner/Admin & Basic-Intermediate & Mobile + Desktop & Easy interface, comprehensive data \\ \hline
+Farm Worker & Basic & None (indirect) & Manual reporting to owner \\ \hline
+System Admin & Advanced & Desktop & Full system access, technical tools \\ \hline
 \end{tabular}
 \end{table}
-\end{spacing}
 
-\subsection{Constraints}
-\begin{spacing}{1.5}
+\section{Operating Environment}
+
+\subsection{Hardware Environment}
+\subsubsection{Collar Devices}
 \begin{itemize}
-\item Continuous internet connectivity is required for real-time monitoring
-\item System accuracy depends on sensor reliability
-\newpage
-\item Hardware installation must follow safety standards
-\item Power BI analytics depends on availability of cloud services
+\item Rugged, weatherproof construction (IP67 rating)
+\item Battery life: minimum 7 days
+\item GPS accuracy: ±5 meters
+\item Operating temperature: -20°C to +50°C
+\item Weight: Maximum 500 grams
+\item Cellular connectivity: 4G with 3G fallback 
 \end{itemize}
-\end{spacing}
 
-\subsection{Assumptions and Dependencies}
-\begin{spacing}{1.5}
+\subsubsection{Mobile Devices}
 \begin{itemize}
-\item Users possess smartphones with internet access
-\item Hardware devices remain operational in farm environments
-\item Cloud services provide uninterrupted availability
-\item Users will use valid login credentials for system access
+\item Android devices: Android 10.0+ required
+\item Minimum screen size: 4.7 inches
+\item Cellular or WiFi connectivity required
+\item Minimum 2GB RAM, 32GB storage
 \end{itemize}
-\end{spacing}
 
-% ================= SPECIFIC REQUIREMENTS =================
-\section{Specific Requirements}
-
-\subsection{Functional Requirements}
-\begin{spacing}{1.5}
+\subsubsection{Desktop Computers}
 \begin{itemize}
-\item \textbf{FR-01}: The system shall allow users (Farm Owner/Admin) to register and log in using secure authentication credentials.
-\item \textbf{FR-02}: The system shall authenticate users before granting access to system features.
-\item \textbf{FR-03}: The system shall track real-time cattle location using GPS collars.
-\item \textbf{FR-04}: The system shall monitor cattle activity and detect anomalies.
-\item \textbf{FR-05}: The system shall store historical cattle data securely on cloud servers.
-\item \textbf{FR-06}: The system shall allow real-time access to cattle data via mobile application.
-\item \textbf{FR-07}: The system shall generate alerts for abnormal behavior or location deviation.
-\item \textbf{FR-08}: The system shall analyze data and generate graphs and dashboards using Power BI.
-\item \textbf{FR-09}: The system shall generate daily, weekly, and monthly analytical reports.
+\item Windows 10+ or macOS 10.15+
+\item Modern web browser (Chrome, Firefox, Safari, Edge)
+\item Minimum 4GB RAM
+\item Internet connection: 5 Mbps minimum
 \end{itemize}
-\end{spacing}
 
-\subsection{Non-Functional Requirements}
-\begin{spacing}{1.5}
-\textbf{Privacy}: The system shall ensure that only authorized users can access cattle and farm data, maintaining confidentiality at all times.
-
-\textbf{Ease of Use}: The user interface shall be simple, intuitive, and easy to navigate, even for users with minimal technical knowledge.
-
-\textbf{Password Recovery}: The system shall provide a secure mechanism for password reset and recovery in case users forget their credentials.
-
-\textbf{Interface Design}: The front-end design shall be responsive and optimized for mobile devices to ensure accessibility in farm environments.
-
-\textbf{Maintainability}: The system architecture shall support easy updates and maintenance without affecting existing functionality.
-
-These non-functional aspects ensure that CattleCare Pro remains user-friendly, secure, and reliable throughout its lifecycle.
-\end{spacing}
-
-\begin{spacing}{1.5}
+\subsection{Software Environment}
+\subsubsection{Cloud Platform}
 \begin{itemize}
-\item \textbf{Usability}: The system shall be easy to use for non-technical users.
-\item \textbf{Security}: The system shall protect user data through secure login, authentication, and cloud encryption.
-\item \textbf{Reliability}: The system shall operate continuously with minimal downtime.
-\item \textbf{Scalability}: The system shall support future expansion in users, cattle, and data volume.
-\item \textbf{Performance}: The system shall process and display real-time data and Power BI analytics within 2 seconds of reception.
+\item Microsoft Azure or Amazon Web Services
+\item Scalable compute and storage resources
+\item IoT Hub or equivalent service
+\item Database service (SQL or NoSQL)
 \end{itemize}
+
+\subsubsection{Mobile Platform}
+\begin{itemize}
+\item Native Android application (Kotlin)
+\item Minimum API level: Android API 29
+\end{itemize}
+
+\subsubsection{Analytics Platform}
+\begin{itemize}
+\item Microsoft Power BI Desktop and Service
+\item Power BI Mobile applications
+\item Data gateway for cloud connectivity
+\end{itemize}
+
+\subsection{Network Environment}
+\begin{itemize}
+\item \textbf{Cellular:} 4G coverage in grazing areas
+\item \textbf{Internet:} Broadband minimum 10 Mbps at farm office
+\item \textbf{Mobile:} Cellular data or farm WiFi
+\end{itemize}
+
+\section{Design and Implementation Constraints}
+
+\subsection{Regulatory Compliance}
+\begin{itemize}
+\item Compliance with local data protection laws
+\item Animal welfare monitoring requirements
+\item Wireless communication regulations
+\end{itemize}
+
+\subsection{Technology Constraints}
+\begin{itemize}
+\item \textbf{Battery Life:} GPS readings must balance accuracy with power consumption
+\item \textbf{Network Coverage:} Limited cellular coverage in rural areas
+\item \textbf{GPS Accuracy:} Signal quality affected by terrain and weather
+\end{itemize}
+
+\subsection{Development Constraints}
+\begin{itemize}
+\item Fixed academic semester timeline
+\item Development team size: 3 developers
+\item Limited budget for cloud services
+\item Access to farm environments for testing
+\end{itemize}
+
+\subsection{Security Constraints}
+\begin{itemize}
+\item Multi-factor authentication for admin access
+\item End-to-end encryption for sensitive data
+\item Secure communication protocols (HTTPS)
+\end{itemize}
+
+\section{Assumptions and Dependencies}
+
+\subsection{Assumptions}
+\begin{itemize}
+\item \textbf{A1:} Adequate cellular network coverage exists in grazing areas
+\item \textbf{A2:} Farm owner possesses Android smartphone
+\item \textbf{A3:} Reliable internet connectivity available at farm
+\item \textbf{A4:} GPS collars can be securely attached to cattle
+\item \textbf{A5:} Cloud service providers maintain service levels
+\item \textbf{A6:} Users have basic smartphone operation skills
+\item \textbf{A7:} Users willing to adopt technology-based practices
+\item \textbf{A8:} Collar devices will be regularly maintained
+\end{itemize}
+
+\subsection{Dependencies}
+\begin{itemize}
+\item \textbf{D1:} Cloud platform services availability
+\item \textbf{D2:} Cellular network infrastructure
+\item \textbf{D3:} GPS satellite system operation
+\item \textbf{D4:} Android operating system updates
+\item \textbf{D5:} Power BI platform licensing
+\item \textbf{D6:} GPS collar device manufacturer support
+\item \textbf{D7:} Cellular service provider coverage
+\end{itemize}
+
 \end{spacing}
 
-\subsection{References}
+% ======================================================
+\chapter{Specific Requirements}
 \begin{spacing}{1.5}
-\begin{flushleft}
-[1] Requirement Provider Interview, Personal communication, Dec. 2025.
-\end{flushleft}
+
+\section{Functional Requirements}
+
+\subsection{User Authentication and Authorization}
+
+\paragraph{FR-01: User Account Creation}
+The system shall allow authorized administrators to create new user accounts by providing username, email address, password, full name, and role assignment. Account creation shall generate a unique user identifier.
+
+\paragraph{FR-02: Secure Login}
+The system shall authenticate users by verifying username/email and password credentials against the encrypted database. Upon successful authentication, the system shall create a secure session token valid for 24 hours.
+
+\paragraph{FR-03: Password Security}
+The system shall enforce password requirements: minimum 8 characters, at least one uppercase letter, one lowercase letter, one number, and one special character. Passwords shall be stored using bcrypt hashing.
+
+\paragraph{FR-04: Password Recovery}
+The system shall provide password reset functionality via email verification. Users shall receive a time-limited reset link (valid 1 hour) to set a new password.
+
+\paragraph{FR-05: Role-Based Access Control}
+The system shall implement two primary user roles:
+\begin{itemize}
+\item \textbf{Administrator:} Full system access including user management and system configuration
+\item \textbf{Viewer:} Read-only access to reports and dashboards
+\end{itemize}
+
+\paragraph{FR-06: Session Management}
+The system shall automatically terminate inactive user sessions after 30 minutes. Users shall receive a warning 5 minutes before automatic logout.
+
+\subsection{Cattle Registration and Management}
+
+\paragraph{FR-07: Add New Cattle Record}
+The system shall allow administrators to register new cattle by entering unique identification number (tag ID), collar device ID, breed, date of birth, gender, and optional notes. The system shall validate uniqueness of tag ID and collar ID.
+
+\paragraph{FR-08: Update Cattle Information}
+The system shall allow authorized users to modify cattle profile information. All changes shall be logged with timestamp and user identification.
+
+\paragraph{FR-09: Remove Cattle Record}
+The system shall allow administrators to deactivate cattle records when animals are sold or deceased. Historical data shall be retained for archived records.
+
+\paragraph{FR-10: Search and Filter Cattle}
+The system shall provide search and filter capabilities by tag ID, collar ID, breed, age range, gender, and status. Results shall be displayed in sortable tables.
+
+\paragraph{FR-11: Create Cattle Groups}
+The system shall allow administrators to define cattle groups (e.g., "Breeding Stock," "Calves 2024") and assign multiple cattle to each group.
+
+\subsection{Real-Time Location Tracking}
+
+\paragraph{FR-12: Receive GPS Coordinates}
+The system shall continuously receive GPS coordinates (latitude, longitude) from all active collar devices. Data reception shall include timestamp, device ID, and accuracy estimate.
+
+\paragraph{FR-13: Data Transmission Frequency}
+GPS collar devices shall transmit location data at configurable intervals, with default setting of every 5 minutes during daytime and every 15 minutes during nighttime.
+
+\paragraph{FR-14: Display Current Locations}
+The system shall display current location of all tracked cattle on an interactive map. Each cattle location shall be represented by a marker showing tag ID.
+
+\paragraph{FR-15: Map Interaction Features}
+The map interface shall support zoom, pan, marker click for details, legend, and layer controls for geofences.
+
+\paragraph{FR-16: Location Refresh}
+The system shall automatically update displayed cattle locations when new GPS data is received without requiring manual refresh.
+
+\paragraph{FR-17: Individual Cattle Tracking}
+The system shall allow users to select a specific animal and view its current location, recent movement path (last 24 hours), and relevant details.
+
+\paragraph{FR-18: Store Location History}
+The system shall store all received GPS coordinates in the cloud database with associated metadata: timestamp, cattle ID, coordinates, accuracy, and battery level.
+
+\paragraph{FR-19: Display Historical Paths}
+The system shall allow users to query and display historical movement paths for any cattle over a specified date range. Paths shall be rendered as connected lines on the map.
+
+
+\subsection{Activity Monitoring}
+
+\paragraph{FR-20: Record Movement Data}
+Collar devices shall record accelerometer data to detect animal movement and activity levels. Activity metrics shall be computed and transmitted with location data.
+
+\paragraph{FR-21: Activity Classification}
+The system shall classify cattle activity into categories: Active (moving/grazing), Resting (lying down), Feeding (head-down position), and Unknown.
+
+\paragraph{FR-22: Calculate Daily Activity Metrics}
+The system shall compute daily activity summaries for each animal: total active time, total rest time, activity percentage, and number of transitions.
+
+\paragraph{FR-23: Activity Pattern Recognition}
+The system shall analyze activity patterns over time to establish baseline behavior profiles and detect deviations from normal patterns.
+
+\paragraph{FR-24: Comparative Activity Analysis}
+The system shall allow users to compare activity levels between multiple cattle or between an individual and herd average.
+
+\subsection{Geofence Management}
+
+\paragraph{FR-25: Create Geofence Areas}
+The system shall allow administrators to define geofence boundaries by drawing polygons on a map or entering GPS coordinates. Each geofence shall have a unique name and description.
+
+\paragraph{FR-26: Multiple Geofence Support}
+The system shall support creation of multiple geofence areas representing different pastures and restricted zones.
+
+\paragraph{FR-27: Modify Geofences}
+The system shall allow administrators to edit geofence boundaries and active status without deleting historical violation records.
+
+\paragraph{FR-28: Detect Geofence Violations}
+The system shall evaluate each GPS location against all active geofences and detect when cattle enter or exit boundaries. Violations shall be recorded with timestamp.
+
+\paragraph{FR-29: Geofence Status Display}
+The system shall display current geofence compliance status for all cattle on the monitoring dashboard.
+
+\subsection{Alert and Notification System}
+
+\paragraph{FR-30: Geofence Violation Alerts}
+The system shall automatically generate high-priority alerts when cattle exit designated safe zones. Alerts shall include cattle identification, location, time, and geofence name.
+
+\paragraph{FR-31: Inactivity Alerts}
+The system shall generate medium-priority alerts when cattle activity falls below threshold levels for extended periods (configurable, default 4 hours).
+
+\paragraph{FR-32: Device Malfunction Alerts}
+The system shall generate alerts when collar device battery falls below 15%, GPS signal is lost for more than 30 minutes, or device communication failure occurs.
+
+\paragraph{FR-33: Unusual Activity Alerts}
+The system shall generate alerts when cattle exhibit abnormal activity patterns significantly different from established baselines.
+
+\paragraph{FR-34: Push Notifications}
+The system shall deliver alert notifications to mobile devices via push notification service within 30 seconds of alert generation.
+
+\paragraph{FR-35: SMS Notification}
+The system shall support optional SMS text message delivery of critical alerts to designated phone numbers.
+
+\paragraph{FR-36: In-App Alert Center}
+The mobile application shall maintain an Alert Center displaying all alerts with status (new, acknowledged, resolved).
+
+\paragraph{FR-37: Acknowledge Alerts}
+The system shall allow users to acknowledge alerts to indicate awareness. Acknowledged alerts shall be marked with timestamp and user identity.
+
+\paragraph{FR-38: Resolve Alerts}
+The system shall allow users to mark alerts as resolved with optional resolution notes.
+
+\paragraph{FR-39: Configure Alert Preferences}
+The system shall allow administrators to configure alert thresholds, notification channels, and user assignments.
+
+\subsection{Data Analytics and Reporting}
+
+\paragraph{FR-40: Real-Time Dashboard}
+The system shall provide a main dashboard displaying total cattle count, cattle by status, active alerts count, geofence compliance summary, and recent activity highlights.
+
+\paragraph{FR-41: Individual Cattle Dashboard}
+The system shall provide detailed dashboard for individual animals showing current location, activity graphs, alert history, and key metrics.
+
+\paragraph{FR-42: Herd Overview Analytics}
+The system shall provide herd-level analytics including activity distribution charts, location heat maps, health status summary, and trend indicators.
+
+\paragraph{FR-43: Power BI Integration}
+The system shall integrate with Microsoft Power BI for advanced data visualization, enabling users to create custom dashboards and reports.
+
+\paragraph{FR-44: Daily Activity Reports}
+The system shall generate automated daily reports summarizing cattle locations, activity levels, alerts generated, and any incidents.
+
+\paragraph{FR-45: Custom Report Builder}
+The system shall provide a report builder allowing users to create custom reports by selecting data sources, date ranges, and output format.
+
+\paragraph{FR-46: Scheduled Reports}
+The system shall allow administrators to schedule automated report generation and delivery via email at specified intervals (daily, weekly, monthly).
+
+\paragraph{FR-47: Trend Analysis}
+The system shall provide trend analysis tools showing activity patterns, location preferences, and behavior changes over selectable time periods.
+
+\paragraph{FR-48: Comparative Analysis}
+The system shall allow comparison of metrics between individual cattle, groups, and time periods to identify outliers and patterns.
+
+\subsection{System Administration}
+
+\paragraph{FR-49: User Account Management}
+The system shall allow administrators to create new accounts, modify user details, change roles, reset passwords, and deactivate accounts. All actions shall be logged.
+
+\paragraph{FR-50: Audit Logging}
+The system shall maintain comprehensive audit logs recording user actions, system changes, data modifications, and security events with timestamps.
+
+\paragraph{FR-51: General System Settings}
+The system shall provide configuration interface for organization details, time zone, measurement units, and date/time formats.
+
+\paragraph{FR-52: Device Management}
+The system shall allow administrators to register new collar devices, assign devices to cattle, modify device settings, and view device status.
+
+\paragraph{FR-53: Notification Configuration}
+The system shall allow configuration of alert thresholds, notification channels, escalation rules, and quiet hours.
+
+\paragraph{FR-54: Data Backup}
+The system shall perform automated daily backups of all system data to secure cloud storage with retention period of 90 days.
+
+
+\section{Non-Functional Requirements}
+
+\subsection{Performance Requirements}
+
+\paragraph{NFR-01: User Interface Response}
+The system shall respond to 95\% of user interface interactions within 2 seconds under normal load conditions.
+
+\paragraph{NFR-02: Map Loading Time}
+The interactive map with cattle locations shall load and display within 3 seconds for herds up to 500 animals.
+
+\paragraph{NFR-03: Alert Delivery Time}
+Critical alerts shall be delivered to user mobile devices within 30 seconds of alert trigger event.
+
+\paragraph{NFR-04: Data Synchronization}
+The system shall synchronize new GPS data to the database within 10 seconds of data reception by cloud platform.
+
+\paragraph{NFR-05: Report Generation}
+Standard reports shall be generated within 10 seconds for date ranges up to 30 days.
+
+\paragraph{NFR-06: Concurrent GPS Processing}
+The system shall process GPS data from at least 1,000 collar devices simultaneously.
+
+\paragraph{NFR-07: Concurrent User Support}
+The system shall support at least 50 concurrent users accessing the mobile or web applications simultaneously without performance degradation.
+
+\paragraph{NFR-08: Database Query Performance}
+Database queries for current cattle status shall execute in under 1 second for herds up to 1,000 animals.
+
+\subsection{Reliability Requirements}
+
+\paragraph{NFR-09: System Uptime}
+The system shall maintain 99.5\% uptime excluding planned maintenance windows, allowing maximum 43.8 hours of downtime per year.
+
+\paragraph{NFR-10: Data Recovery Time}
+In the event of system failure, data recovery and system restoration shall be completed within 4 hours.
+
+\paragraph{NFR-11: Backup Verification}
+System backups shall be verified weekly to ensure recoverability. Backup restoration testing shall be performed quarterly.
+
+\paragraph{NFR-12: Error Handling}
+The system shall implement comprehensive error handling with graceful degradation and informative error messages to users.
+
+\paragraph{NFR-13: Fault Tolerance}
+The system shall continue operating with degraded functionality if individual components fail, ensuring critical features remain available.
+
+\subsection{Security Requirements}
+
+\paragraph{NFR-14: Data Encryption}
+All sensitive data shall be encrypted both in transit (using TLS 1.2+) and at rest (using AES-256 encryption).
+
+\paragraph{NFR-15: Password Storage}
+User passwords shall be hashed using bcrypt algorithm with salt before storage. Plain text passwords shall never be stored.
+
+\paragraph{NFR-16: Session Security}
+User sessions shall be secured with randomly generated tokens, automatic timeout after 30 minutes of inactivity, and secure cookie attributes.
+
+\paragraph{NFR-17: Access Control}
+The system shall enforce role-based access control, preventing unauthorized users from accessing restricted features or data.
+
+\paragraph{NFR-18: Audit Trail}
+All security-relevant events (login attempts, permission changes, data modifications) shall be logged with timestamp, user identity, and action details.
+
+\paragraph{NFR-19: Data Privacy}
+The system shall ensure that only authorized users can access cattle and farm data, maintaining confidentiality at all times.
+
+\subsection{Usability Requirements}
+
+\paragraph{NFR-20: Learning Curve}
+Users with basic smartphone skills shall be able to perform common tasks (view cattle locations, respond to alerts) within 15 minutes of first use.
+
+\paragraph{NFR-21: Interface Simplicity}
+The mobile application interface shall be intuitive and easy to navigate for users with minimal technical knowledge.
+
+\paragraph{NFR-22: Help Documentation}
+The system shall provide context-sensitive help and user documentation accessible within the application.
+
+\paragraph{NFR-23: Error Messages}
+Error messages shall be clear, specific, and provide guidance on how to resolve the issue.
+
+\paragraph{NFR-24: Consistency}
+User interface elements, terminology, and interaction patterns shall be consistent throughout the application.
+
+\subsection{Maintainability Requirements}
+
+\paragraph{NFR-25: Code Documentation}
+Source code shall include inline comments for complex logic and comprehensive API documentation.
+
+\paragraph{NFR-26: Modular Architecture}
+The system shall be designed with modular architecture allowing individual components to be updated without affecting others.
+
+\paragraph{NFR-27: Version Control}
+All source code shall be maintained in Git version control system with meaningful commit messages.
+
+\paragraph{NFR-28: Database Maintenance}
+The system shall support routine maintenance operations (backup, optimization, archival) without requiring system shutdown.
+
+\subsection{Scalability Requirements}
+
+\paragraph{NFR-29: Cattle Population Support}
+The system shall support monitoring of at least 5,000 individual cattle per installation without hardware upgrades.
+
+\paragraph{NFR-30: Horizontal Scalability}
+The system architecture shall support horizontal scaling of application servers and database instances to accommodate growth.
+
+\paragraph{NFR-31: Data Storage Capacity}
+The system shall store complete location and activity data for all cattle for minimum 2 years with efficient retrieval.
+
+\subsection{Portability Requirements}
+
+\paragraph{NFR-32: Android Platform Support}
+The mobile application shall run on Android devices version 10.0 and above without modification.
+
+\paragraph{NFR-33: Cloud Platform Independence}
+The system architecture shall minimize dependencies on specific cloud provider features to facilitate potential migration.
+
+\subsection{Availability Requirements}
+
+\paragraph{NFR-34: Planned Maintenance}
+Planned maintenance windows shall be scheduled during low-usage periods (midnight to 4 AM) with 48-hour advance notification.
+
+\paragraph{NFR-35: Offline Capability}
+The mobile application shall cache recently viewed data and provide read-only access when network connectivity is unavailable.
+
+\section{External Interface Requirements}
+
+\subsection{User Interface Requirements}
+
+\paragraph{IR-01: Mobile Platform Support}
+The system shall provide native mobile application for Android (version 10.0 and above).
+
+\paragraph{IR-02: Mobile Navigation Structure}
+The mobile application shall implement bottom navigation with sections: Dashboard, Map, Alerts, Cattle List, and Settings.
+
+\paragraph{IR-03: Touch-Friendly Interface}
+All interactive elements shall have minimum touch target size of 48x48 dp for accessibility.
+
+\paragraph{IR-04: Responsive Map Interface}
+The mobile map interface shall support pinch-to-zoom, two-finger rotation, marker clustering, and smooth panning.
+
+\paragraph{IR-05: Web Browser Compatibility}
+The web application shall function correctly on current versions of Chrome, Firefox, Safari, and Edge browsers.
+
+\paragraph{IR-06: Responsive Web Design}
+The web interface shall adapt to different screen sizes maintaining usability from 1024x768 to 4K displays.
+
+\subsection{Hardware Interface Requirements}
+
+\paragraph{IR-07: Device Communication Protocol}
+The system shall communicate with GPS collar devices using MQTT protocol over secure TLS connection.
+
+\paragraph{IR-08: Data Packet Format}
+GPS collar devices shall transmit data in JSON format containing device ID, timestamp, GPS coordinates, accuracy, battery percentage, and activity metrics.
+
+\paragraph{IR-09: Device Command Interface}
+The system shall support sending configuration commands to devices including data transmission frequency adjustment and low-power mode activation.
+
+\paragraph{IR-10: Mobile Device GPS Integration}
+The mobile application may access device GPS to show user location on maps relative to cattle positions.
+
+\subsection{Software Interface Requirements}
+
+\paragraph{IR-11: Cloud IoT Service}
+The system shall interface with Azure IoT Hub or AWS IoT Core using standard MQTT or AMQP protocols.
+
+\paragraph{IR-12: Cloud Database Interface}
+The system shall interface with cloud database services using standard SQL queries and ORM frameworks.
+
+\paragraph{IR-13: Cloud Storage Interface}
+The system shall interface with cloud blob storage for storing images, reports, and backup files.
+
+\paragraph{IR-14: Mapping Service Integration}
+The system shall integrate with Google Maps API or equivalent for map display and geocoding functions.
+
+\paragraph{IR-15: SMS Gateway Interface}
+The system shall interface with SMS gateway service via REST API for sending text notifications.
+
+\paragraph{IR-16: Email Service Interface}
+The system shall interface with email delivery service via SMTP or REST API for notifications and reports.
+
+\paragraph{IR-17: Power BI Integration}
+The system shall expose data through REST API endpoints compatible with Power BI data connectors.
+
+\subsection{Communication Interface Requirements}
+
+\paragraph{IR-18: HTTPS Communication}
+All communication between client applications and cloud services shall use HTTPS with TLS 1.2 or higher encryption.
+
+\paragraph{IR-19: RESTful API}
+The system shall expose RESTful API following standard HTTP methods (GET, POST, PUT, DELETE).
+
+\paragraph{IR-20: JSON Data Format}
+All API communications shall use JSON format for request and response bodies.
+
+\paragraph{IR-21: API Authentication}
+API requests shall be authenticated using bearer tokens (JWT) transmitted in Authorization headers.
+
+\paragraph{IR-22: API Rate Limiting}
+The API shall implement rate limiting (default 1000 requests per hour) with appropriate HTTP 429 status codes.
+
+\section{Design Constraints}
+
+\paragraph{DR-01: IEEE Standards Compliance}
+Software development shall adhere to IEEE Std 830-1998 for requirements specification.
+
+\paragraph{DR-02: Android Development Standards}
+The mobile application shall follow Android development best practices and Material Design guidelines.
+
+\paragraph{DR-03: Cloud Platform Selection}
+The system shall be deployed on either Microsoft Azure or Amazon Web Services cloud infrastructure.
+
+\paragraph{DR-04: Programming Language}
+The Android mobile application shall be developed using JavaScript programming language.
+
+\paragraph{DR-05: Database Technology}
+The system shall use SQL database (Azure SQL or Amazon RDS) for structured data storage.
+
 \end{spacing}
 
-
-% ================= APPENDICES =================
-\section{Appendices}
-\subsection{Appendix Overview}
+% ======================================================
+\chapter{System Models}
 \begin{spacing}{1.5}
-This appendix section provides supplementary material to support the understanding of the CattleCare Pro system. It includes visual diagrams and detailed explanations that illustrate system interactions, data flow, and user behavior. The diagrams presented in this section help in visualizing how different system components work together to achieve project objectives.
-\end{spacing}
 
-\subsection{Context Diagram}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{context_diagram.jpg}
-\caption{Context Diagram of CattleCare Pro}
-\end{figure}
-
-
-\begin{spacing}{1.5}
-The context diagram represents the interaction between the CattleCare Pro System and its external entities. The Farm Owner/Admin interacts with the system to submit monitoring requests and receive cattle location data, alerts, and analytical reports. The System Admin manages system users, connected devices, and monitors system health logs. Sensors continuously provide real-time location and activity data to the system. The Cloud Server is used for secure storage and processing of historical cattle data. Only external entities that directly exchange data with the system are included in the context diagram, ensuring consistency with the system scope defined in the SRS.
-\end{spacing}
+\section{Use Case Model}
 
 \subsection{Use Case Diagram}
-\begin{figure}[H]
-\centering
-\includegraphics[width=0.8\textwidth]{UseCase.jpg}
-\caption{Use Case Diagram of CattleCare Pro}
-\end{figure}
+The use case diagram illustrates the functional interactions between system actors and the CattleCare Pro system. The primary actors are:
+
+\begin{itemize}
+\item \textbf{Farm Owner/Administrator:} Interacts with the system to monitor cattle, receive alerts, view reports, and configure system settings
+\item \textbf{System Administrator:} Manages user accounts, devices, and system configuration
+\item \textbf{GPS Collar Device:} Provides location and activity data (represented as external system)
+\end{itemize}
+
+\subsection{Primary Use Cases}
+
+\subsubsection{UC-01: User Login}
+\textbf{Actor:} Farm Owner/Administrator, System Administrator
+
+\textbf{Precondition:} User has valid account credentials
+
+\textbf{Main Flow:}
+\begin{enumerate}
+\item User enters username and password
+\item System validates credentials
+\item System creates secure session
+\item System displays main dashboard
+\end{enumerate}
+
+\textbf{Postcondition:} User is authenticated and can access authorized features
+
+\subsubsection{UC-02: Monitor Cattle Location}
+\textbf{Actor:} Farm Owner/Administrator
+
+\textbf{Precondition:} User is logged in, GPS collars are active
+
+\textbf{Main Flow:}
+\begin{enumerate}
+\item User navigates to Map view
+\item System retrieves current GPS coordinates
+\item System displays cattle locations on interactive map
+\item User can zoom, pan, and select individual cattle
+\item System shows detailed information for selected cattle
+\end{enumerate}
+
+\textbf{Postcondition:} User views current cattle locations
+
+\subsubsection{UC-03: View Activity Data}
+\textbf{Actor:} Farm Owner/Administrator
+
+\textbf{Precondition:} User is logged in, activity data is available
+
+\textbf{Main Flow:}
+\begin{enumerate}
+\item User selects specific cattle or group
+\item User specifies date range
+\item System retrieves activity data
+\item System displays activity graphs and metrics
+\item User can compare with historical baselines
+\end{enumerate}
+
+\textbf{Postcondition:} User views activity analysis
+
+\subsubsection{UC-04: Receive Alert Notification}
+\textbf{Actor:} Farm Owner/Administrator
+
+\textbf{Precondition:} Alert condition is detected
+
+\textbf{Main Flow:}
+\begin{enumerate}
+\item System detects anomaly (geofence violation, inactivity, etc.)
+\item System generates alert record
+\item System sends push notification to mobile device
+\item User receives and views notification
+\item User acknowledges or resolves alert
+\end{enumerate}
+
+\textbf{Postcondition:} User is notified of critical event
+
+\subsubsection{UC-05: Generate Report}
+\textbf{Actor:} Farm Owner/Administrator
+
+\textbf{Precondition:} User is logged in, data is available
+
+\textbf{Main Flow:}
+\begin{enumerate}
+\item User navigates to Reports section
+\item User selects report type and parameters
+\item System generates report
+\item System displays report with visualizations
+\item User can export report in desired format
+\end{enumerate}
+
+\textbf{Postcondition:} User obtains analytical report
+
+\subsubsection{UC-06: Configure Geofence}
+\textbf{Actor:} Farm Owner/Administrator
+
+\textbf{Precondition:} User is logged in with admin privileges
+
+\textbf{Main Flow:}
+\begin{enumerate}
+\item User navigates to Geofence Management
+\item User creates new geofence by drawing on map
+\item User names and describes geofence
+\item System saves geofence configuration
+\item System begins monitoring cattle against new boundary
+\end{enumerate}
+
+\textbf{Postcondition:} New geofence is active
+
+\subsubsection{UC-07: Manage User Accounts}
+\textbf{Actor:} System Administrator
+
+\textbf{Precondition:} Admin is logged in
+
+\textbf{Main Flow:}
+\begin{enumerate}
+\item Admin navigates to User Management
+\item Admin creates, modifies, or deactivates user accounts
+\item Admin assigns roles and permissions
+\item System validates and saves changes
+\item System logs administrative action
+\end{enumerate}
+
+\textbf{Postcondition:} User accounts are updated
+\subsection{Use Case Diagram} \begin{figure}[H] \centering \includegraphics[width=0.8\textwidth]{UseCase.jpg} \caption{Use Case Diagram of CattleCare Pro} \end{figure}
+
+\section{Context Diagram}
+
+The context diagram represents the CattleCare Pro system as a single process and shows its interactions with external entities. The system boundary encompasses all internal processing, while external entities include:
+
+\begin{itemize}
+\item \textbf{Farm Owner/Admin:} Submits monitoring requests, receives cattle data and alerts
+\item \textbf{System Administrator:} Manages users, devices, and system configuration
+\item \textbf{GPS Collar Devices:} Provide location and activity data to system
+\item \textbf{Cloud Server:} Stores and processes data
+\item \textbf{Power BI:} Receives data for analytics visualization
+\end{itemize} 
+\subsection{Context Diagram} \begin{figure}[H] \centering \includegraphics[width=0.8\textwidth]{context_diagram.jpg} \caption{Context Diagram of CattleCare Pro} \end{figure}
+\end{spacing}
+
+% ======================================================
+\chapter{Appendices}
 \begin{spacing}{1.5}
-The use case diagram represents the functional interactions of the CattleCare Pro system. The Farm Owner/Admin is the primary actor who interacts with the system to monitor cattle location, health status, view analytical reports, and receive alerts. The System Admin is responsible for managing system users, connected devices, and ensuring secure cloud data storage. Farm workers do not interact directly with the system and are therefore excluded from the use case diagram. External components such as sensors and cloud services are treated as supporting infrastructure and are not represented as actors in the use case diagram in accordance with UML standards.
+
+\section{Glossary}
+
+\subsection{Technical Terms}
+
+\textbf{Accelerometer:} A sensor that measures acceleration forces, used in collar devices to detect cattle movement and activity levels.
+
+\textbf{API (Application Programming Interface):} A set of protocols and tools for building software applications that specify how components should interact.
+
+\textbf{Baseline Behavior:} The normal or typical activity pattern established for an individual animal over time, used as reference for anomaly detection.
+
+\textbf{Bearer Token:} An authentication token that grants access to protected resources, typically passed in the Authorization header of HTTP requests.
+
+\textbf{Cloud Computing:} Delivery of computing services including servers, storage, databases, and software over the internet.
+
+\textbf{Collar Device:} IoT hardware worn by cattle that includes GPS, accelerometer, battery, and cellular communication capabilities.
+
+\textbf{Dashboard:} A visual display of important information organized for quick monitoring and decision-making.
+
+\textbf{Data Encryption:} Process of converting information into code to prevent unauthorized access.
+
+\textbf{Geofencing:} Use of GPS or RFID technology to create virtual geographic boundary, enabling software to trigger response when device enters or leaves area.
+
+\textbf{IoT Hub:} Cloud service that provides bidirectional communication between IoT application and devices it manages.
+
+\textbf{JSON (JavaScript Object Notation):} Lightweight data interchange format that is easy for humans to read and write.
+
+\textbf{JWT (JSON Web Token):} Compact means of representing claims to be transferred between two parties, commonly used for authentication.
+
+\textbf{Power BI:} Business analytics service by Microsoft providing interactive visualizations with self-service business intelligence capabilities.
+
+\textbf{Push Notification:} Message sent from application to user's device that appears even when application is not actively being used.
+
+\section{Analysis Models}
+
+\subsection{Cost-Benefit Analysis}
+
+\subsubsection{Implementation Costs}
+\begin{itemize}
+\item GPS collar devices: \$50-100 per device
+\item Cloud hosting: \$200-500 per month
+\item Mobile app development: One-time development cost
+\item System maintenance: Ongoing operational cost
+\end{itemize}
+
+\subsubsection{Expected Benefits}
+\begin{itemize}
+\item Reduced cattle loss from theft (estimated 5-10\% reduction)
+\item Early disease detection reducing mortality
+\item Improved operational efficiency (20-30\% time savings)
+\item Better grazing management
+\item Data-driven decision making
+\end{itemize}
+
+\subsection{Risk Analysis}
+
+\begin{table}[H]
+\centering
+\caption{Risk Assessment Matrix}
+\begin{tabular}{|p{4cm}|p{2cm}|p{2cm}|p{5cm}|}
+\hline
+\textbf{Risk} & \textbf{Probability} & \textbf{Impact} & \textbf{Mitigation Strategy} \\ \hline
+Network coverage gaps & High & High & Store data locally, sync when connected \\ \hline
+Device battery failure & Medium & Medium & Low battery alerts, regular maintenance \\ \hline
+Cloud service outage & Low & High & Redundant systems, local caching \\ \hline
+User adoption resistance & Medium & Medium & Training programs, gradual rollout \\ \hline
+Data security breach & Low & High & Encryption, access control, auditing \\ \hline
+GPS signal loss & Medium & Medium & Multiple position sources, interpolation \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Future Enhancements}
+
+\subsection{Planned Features for Version 2.0}
+\begin{itemize}
+\item \textbf{Health Monitoring:} Integration with temperature and heart rate sensors for comprehensive health tracking
+\item \textbf{Breeding Management:} Automated estrus detection and breeding recommendations
+\item \textbf{Feed Optimization:} Integration with feeding systems for automated nutrition management
+\item \textbf{Weather Integration:} Correlation of weather data with cattle behavior
+\item \textbf{Multi-Farm Support:} Capability to manage multiple farm locations from single interface
+\item \textbf{Veterinary Integration:} Direct sharing of data with veterinary systems
+\item \textbf{Machine Learning:} Advanced predictive analytics for disease outbreak prediction
+\item \textbf{Voice Commands:} Hands-free operation using voice interface
+\item \textbf{AR Visualization:} Augmented reality features for field identification
+\end{itemize}
+
+\subsection{Technology Roadmap}
+\begin{itemize}
+\item \textbf{Q1 2025:} iOS application development
+\item \textbf{Q2 2025:} Advanced analytics and ML integration
+\item \textbf{Q3 2025:} Health sensor integration
+\item \textbf{Q4 2025:} Multi-farm and enterprise features
+\end{itemize}
+
+\section{Requirements Traceability Matrix}
+
+\begin{longtable}{|p{2cm}|p{5cm}|p{2.5cm}|p{3.5cm}|}
+\caption{Requirements Traceability} \\
+\hline
+\textbf{Req ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Test Case} \\ \hline
+\endfirsthead
+\hline
+\textbf{Req ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Test Case} \\ \hline
+\endhead
+FR-01 & User account creation & High & TC-AUTH-01 \\ \hline
+FR-02 & Secure login & High & TC-AUTH-02 \\ \hline
+FR-03 & Password security & High & TC-AUTH-03 \\ \hline
+FR-12 & Receive GPS coordinates & Critical & TC-GPS-01 \\ \hline
+FR-15 & Display current locations & Critical & TC-MAP-01 \\ \hline
+FR-27 & Create geofence areas & High & TC-GEO-01 \\ \hline
+FR-32 & Geofence violation alerts & Critical & TC-ALERT-01 \\ \hline
+FR-42 & Real-time dashboard & High & TC-DASH-01 \\ \hline
+FR-45 & Power BI integration & Medium & TC-BI-01 \\ \hline
+NFR-01 & UI response time & High & TC-PERF-01 \\ \hline
+NFR-09 & System uptime & High & TC-REL-01 \\ \hline
+NFR-14 & Data encryption & Critical & TC-SEC-01 \\ \hline
+\end{longtable}
+
+\section{Supporting Documentation References}
+
+\subsection{Technical Documentation}
+\begin{itemize}
+\item Android Development Guide: https://developer.android.com/guide
+\item Kotlin Programming Language: https://kotlinlang.org/docs
+\item Google Maps Android API: https://developers.google.com/maps/documentation/android-sdk
+\item Firebase Cloud Messaging: https://firebase.google.com/docs/cloud-messaging
+\item Power BI Developer Documentation: https://docs.microsoft.com/power-bi/developer
+\end{itemize}
+
+\subsection{Academic References}
+\begin{itemize}
+\item Wathes, C. M., et al. (2008). "Precision livestock farming." Journal of Agricultural Science.
+\item Rutten, C. J., et al. (2013). "Invited review: Sensors to support health management on dairy farms." Journal of Dairy Science.
+\item Berckmans, D. (2014). "Precision livestock farming technologies for welfare management in intensive livestock systems."
+\end{itemize}
 \end{spacing}
 
 \end{document}
