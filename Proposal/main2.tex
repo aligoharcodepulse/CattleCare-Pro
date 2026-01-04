@@ -112,7 +112,7 @@ The software product specified in this document is named \textbf{CattleCare Pro}
 CattleCare Pro aims to revolutionize cattle farming through technology-enabled monitoring and data-driven decision making. The primary benefits include:
 
 \paragraph{Enhanced Animal Welfare}
-By providing real-time monitoring of cattle location and activity patterns, the system enables farmers to quickly identify animals in distress, detect health issues early, and respond promptly to emergency situations.
+By providing real-time monitoring of cattle location and activity patterns, the system enables farmers to quickly identify animals in distress, and respond promptly to emergency situations.
 
 \paragraph{Operational Efficiency}
 The system automates many time-consuming manual tasks such as counting animals, monitoring their locations, and tracking their movements, freeing farm workers to focus on higher-value activities.
@@ -207,7 +207,6 @@ HTTPS & Hypertext Transfer Protocol Secure \\ \hline
 IEEE & Institute of Electrical and Electronics Engineers \\ \hline
 IoT & Internet of Things \\ \hline
 JSON & JavaScript Object Notation \\ \hline
-SMS & Short Message Service \\ \hline
 SRS & Software Requirements Specification \\ \hline
 UI & User Interface \\ \hline
 UX & User Experience \\ \hline
@@ -276,7 +275,7 @@ The system shall continuously monitor and display the current location of all ca
 The system shall analyze movement data to understand cattle behavior:
 \begin{itemize}
 \item Detect periods of activity versus rest
-\item Identify unusual behavior patterns indicating health issues
+\item Identify unusual behavior patterns
 \item Track grazing patterns and feeding behavior
 \item Monitor reproductive behavior indicators
 \end{itemize}
@@ -315,7 +314,6 @@ The system shall provide secure authentication and authorization:
 \item User account creation and management
 \item Role-based access control
 \item Password management and recovery
-\item Audit logging of user actions
 \end{itemize}
 
 \section{User Classes and Characteristics}
@@ -324,7 +322,6 @@ The system shall provide secure authentication and authorization:
 \subsubsection{Characteristics}
 \begin{itemize}
 \item \textbf{Technical Skill Level:} Basic to intermediate
-\item \textbf{Age Range:} 30-60 years
 \item \textbf{Usage Frequency:} Daily, multiple times per day
 \item \textbf{Primary Device:} Mobile phone
 \end{itemize}
@@ -335,14 +332,12 @@ The system shall provide secure authentication and authorization:
 \item Make strategic decisions based on system data
 \item Respond to critical alerts
 \item Configure system settings
-\item Generate reports for business purposes
 \end{itemize}
 
 \subsection{Farm Worker}
 \subsubsection{Characteristics}
 \begin{itemize}
 \item \textbf{Technical Skill Level:} Basic
-\item \textbf{Age Range:} 20-50 years
 \item \textbf{Usage Frequency:} Daily during work hours
 \item \textbf{Role:} Indirect - provides information to Farm Owner
 \end{itemize}
@@ -358,7 +353,6 @@ The system shall provide secure authentication and authorization:
 \subsubsection{Characteristics}
 \begin{itemize}
 \item \textbf{Technical Skill Level:} Advanced
-\item \textbf{Age Range:} 25-45 years
 \item \textbf{Usage Frequency:} As needed for maintenance
 \end{itemize}
 
@@ -378,7 +372,7 @@ The system shall provide secure authentication and authorization:
 \begin{tabular}{|p{3cm}|p{2.5cm}|p{3cm}|p{4cm}|}
 \hline
 \textbf{User Class} & \textbf{Skill Level} & \textbf{Primary Device} & \textbf{Key Requirements} \\ \hline
-Farm Owner/Admin & Basic-Intermediate & Mobile + Desktop & Easy interface, comprehensive data \\ \hline
+Farm Owner/Admin & Basic-Intermediate & Mobile & Easy interface, comprehensive data \\ \hline
 Farm Worker & Basic & None (indirect) & Manual reporting to owner \\ \hline
 System Admin & Advanced & Desktop & Full system access, technical tools \\ \hline
 \end{tabular}
@@ -399,18 +393,9 @@ System Admin & Advanced & Desktop & Full system access, technical tools \\ \hlin
 
 \subsubsection{Mobile Devices}
 \begin{itemize}
-\item Android devices: Android 10.0+ required
-\item Minimum screen size: 4.7 inches
+\item Android devices
 \item Cellular or WiFi connectivity required
 \item Minimum 2GB RAM, 32GB storage
-\end{itemize}
-
-\subsubsection{Desktop Computers}
-\begin{itemize}
-\item Windows 10+ or macOS 10.15+
-\item Modern web browser (Chrome, Firefox, Safari, Edge)
-\item Minimum 4GB RAM
-\item Internet connection: 5 Mbps minimum
 \end{itemize}
 
 \subsection{Software Environment}
@@ -422,12 +407,6 @@ System Admin & Advanced & Desktop & Full system access, technical tools \\ \hlin
 \item Database service (SQL or NoSQL)
 \end{itemize}
 
-\subsubsection{Mobile Platform}
-\begin{itemize}
-\item Native Android application (Kotlin)
-\item Minimum API level: Android API 29
-\end{itemize}
-
 \subsubsection{Analytics Platform}
 \begin{itemize}
 \item Microsoft Power BI Desktop and Service
@@ -437,8 +416,7 @@ System Admin & Advanced & Desktop & Full system access, technical tools \\ \hlin
 
 \subsection{Network Environment}
 \begin{itemize}
-\item \textbf{Cellular:} 4G coverage in grazing areas
-\item \textbf{Internet:} Broadband minimum 10 Mbps at farm office
+\item \textbf{Cellular:} 4G/3G coverage in grazing areas
 \item \textbf{Mobile:} Cellular data or farm WiFi
 \end{itemize}
 
@@ -512,181 +490,156 @@ System Admin & Advanced & Desktop & Full system access, technical tools \\ \hlin
 The system shall allow authorized administrators to create new user accounts by providing username, email address, password, full name, and role assignment. Account creation shall generate a unique user identifier.
 
 \paragraph{FR-02: Secure Login}
-The system shall authenticate users by verifying username/email and password credentials against the encrypted database. Upon successful authentication, the system shall create a secure session token valid for 24 hours.
+The system shall authenticate users by verifying username/email and password credentials against the encrypted database. Upon successful authentication, the system shall create a secure session token.
 
 \paragraph{FR-03: Password Security}
 The system shall enforce password requirements: minimum 8 characters, at least one uppercase letter, one lowercase letter, one number, and one special character. Passwords shall be stored using bcrypt hashing.
 
 \paragraph{FR-04: Password Recovery}
-The system shall provide password reset functionality via email verification. Users shall receive a time-limited reset link (valid 1 hour) to set a new password.
+The system shall provide password reset functionality via email verification. Users shall receive a time-limited reset link to set a new password.
 
-\paragraph{FR-05: Role-Based Access Control}
-The system shall implement two primary user roles:
-\begin{itemize}
-\item \textbf{Administrator:} Full system access including user management and system configuration
-\item \textbf{Viewer:} Read-only access to reports and dashboards
-\end{itemize}
-
-\paragraph{FR-06: Session Management}
-The system shall automatically terminate inactive user sessions after 30 minutes. Users shall receive a warning 5 minutes before automatic logout.
+\paragraph{FR-05: Session Management}
+The system shall automatically terminate inactive user sessions after 15 minutes.
 
 \subsection{Cattle Registration and Management}
 
-\paragraph{FR-07: Add New Cattle Record}
+\paragraph{FR-06: Add New Cattle Record}
 The system shall allow administrators to register new cattle by entering unique identification number (tag ID), collar device ID, breed, date of birth, gender, and optional notes. The system shall validate uniqueness of tag ID and collar ID.
 
-\paragraph{FR-08: Update Cattle Information}
+\paragraph{FR-07: Update Cattle Information}
 The system shall allow authorized users to modify cattle profile information. All changes shall be logged with timestamp and user identification.
 
-\paragraph{FR-09: Remove Cattle Record}
+\paragraph{FR-08: Remove Cattle Record}
 The system shall allow administrators to deactivate cattle records when animals are sold or deceased. Historical data shall be retained for archived records.
 
-\paragraph{FR-10: Search and Filter Cattle}
+\paragraph{FR-09: Search and Filter Cattle}
 The system shall provide search and filter capabilities by tag ID, collar ID, breed, age range, gender, and status. Results shall be displayed in sortable tables.
-
-\paragraph{FR-11: Create Cattle Groups}
-The system shall allow administrators to define cattle groups (e.g., "Breeding Stock," "Calves 2024") and assign multiple cattle to each group.
 
 \subsection{Real-Time Location Tracking}
 
-\paragraph{FR-12: Receive GPS Coordinates}
+\paragraph{FR-10: Receive GPS Coordinates}
 The system shall continuously receive GPS coordinates (latitude, longitude) from all active collar devices. Data reception shall include timestamp, device ID, and accuracy estimate.
 
-\paragraph{FR-13: Data Transmission Frequency}
+\paragraph{FR-11: Data Transmission Frequency}
 GPS collar devices shall transmit location data at configurable intervals, with default setting of every 5 minutes during daytime and every 15 minutes during nighttime.
 
-\paragraph{FR-14: Display Current Locations}
+\paragraph{FR-12: Display Current Locations}
 The system shall display current location of all tracked cattle on an interactive map. Each cattle location shall be represented by a marker showing tag ID.
 
-\paragraph{FR-15: Map Interaction Features}
-The map interface shall support zoom, pan, marker click for details, legend, and layer controls for geofences.
+\paragraph{FR-13: Map Interaction Features}
+The map interface shall support zoom, pan, marker click for details, and layer controls for geofences.
 
-\paragraph{FR-16: Location Refresh}
+\paragraph{FR-14: Location Refresh}
 The system shall automatically update displayed cattle locations when new GPS data is received without requiring manual refresh.
 
-\paragraph{FR-17: Individual Cattle Tracking}
-The system shall allow users to select a specific animal and view its current location, recent movement path (last 24 hours), and relevant details.
+\paragraph{FR-15: Individual Cattle Tracking}
+The system shall allow users to select a specific animal and view its current location, recent movement path, and relevant details.
 
-\paragraph{FR-18: Store Location History}
+\paragraph{FR-16: Store Location History}
 The system shall store all received GPS coordinates in the cloud database with associated metadata: timestamp, cattle ID, coordinates, accuracy, and battery level.
 
-\paragraph{FR-19: Display Historical Paths}
+\paragraph{FR-17: Display Historical Paths}
 The system shall allow users to query and display historical movement paths for any cattle over a specified date range. Paths shall be rendered as connected lines on the map.
 
 
 \subsection{Activity Monitoring}
 
-\paragraph{FR-20: Record Movement Data}
+\paragraph{FR-18: Record Movement Data}
 Collar devices shall record accelerometer data to detect animal movement and activity levels. Activity metrics shall be computed and transmitted with location data.
 
-\paragraph{FR-21: Activity Classification}
-The system shall classify cattle activity into categories: Active (moving/grazing), Resting (lying down), Feeding (head-down position), and Unknown.
+\paragraph{FR-19: Activity Classification}
+The system shall classify cattle activity into categories: Active (moving/grazing), Resting (lying down), and Feeding (head-down position).
 
-\paragraph{FR-22: Calculate Daily Activity Metrics}
-The system shall compute daily activity summaries for each animal: total active time, total rest time, activity percentage, and number of transitions.
+\paragraph{FR-20: Calculate Daily Activity Metrics}
+The system shall compute daily activity summaries for each animal: total active time, and total rest time.
 
-\paragraph{FR-23: Activity Pattern Recognition}
+\paragraph{FR-21: Activity Pattern Recognition}
 The system shall analyze activity patterns over time to establish baseline behavior profiles and detect deviations from normal patterns.
 
-\paragraph{FR-24: Comparative Activity Analysis}
+\paragraph{FR-22: Comparative Activity Analysis}
 The system shall allow users to compare activity levels between multiple cattle or between an individual and herd average.
 
 \subsection{Geofence Management}
 
-\paragraph{FR-25: Create Geofence Areas}
+\paragraph{FR-23: Create Geofence Areas}
 The system shall allow administrators to define geofence boundaries by drawing polygons on a map or entering GPS coordinates. Each geofence shall have a unique name and description.
 
-\paragraph{FR-26: Multiple Geofence Support}
+\paragraph{FR-24: Multiple Geofence Support}
 The system shall support creation of multiple geofence areas representing different pastures and restricted zones.
 
-\paragraph{FR-27: Modify Geofences}
+\paragraph{FR-25: Modify Geofences}
 The system shall allow administrators to edit geofence boundaries and active status without deleting historical violation records.
 
-\paragraph{FR-28: Detect Geofence Violations}
+\paragraph{FR-26: Detect Geofence Violations}
 The system shall evaluate each GPS location against all active geofences and detect when cattle enter or exit boundaries. Violations shall be recorded with timestamp.
 
-\paragraph{FR-29: Geofence Status Display}
+\paragraph{FR-27: Geofence Status Display}
 The system shall display current geofence compliance status for all cattle on the monitoring dashboard.
 
 \subsection{Alert and Notification System}
 
-\paragraph{FR-30: Geofence Violation Alerts}
+\paragraph{FR-28: Geofence Violation Alerts}
 The system shall automatically generate high-priority alerts when cattle exit designated safe zones. Alerts shall include cattle identification, location, time, and geofence name.
 
-\paragraph{FR-31: Inactivity Alerts}
-The system shall generate medium-priority alerts when cattle activity falls below threshold levels for extended periods (configurable, default 4 hours).
+\paragraph{FR-29: Inactivity Alerts}
+The system shall generate medium-priority alerts when cattle activity falls below threshold levels for extended periods.
 
-\paragraph{FR-32: Device Malfunction Alerts}
-The system shall generate alerts when collar device battery falls below 15%, GPS signal is lost for more than 30 minutes, or device communication failure occurs.
+\paragraph{FR-30: Device Malfunction Alerts}
+The system shall generate alerts when collar device battery falls below 15.
 
-\paragraph{FR-33: Unusual Activity Alerts}
+\paragraph{FR-31: Unusual Activity Alerts}
 The system shall generate alerts when cattle exhibit abnormal activity patterns significantly different from established baselines.
 
-\paragraph{FR-34: Push Notifications}
+\paragraph{FR-32: Push Notifications}
 The system shall deliver alert notifications to mobile devices via push notification service within 30 seconds of alert generation.
 
-\paragraph{FR-35: SMS Notification}
-The system shall support optional SMS text message delivery of critical alerts to designated phone numbers.
-
-\paragraph{FR-36: In-App Alert Center}
+\paragraph{FR-33: In-App Alert Center}
 The mobile application shall maintain an Alert Center displaying all alerts with status (new, acknowledged, resolved).
 
-\paragraph{FR-37: Acknowledge Alerts}
+\paragraph{FR-34: Acknowledge Alerts}
 The system shall allow users to acknowledge alerts to indicate awareness. Acknowledged alerts shall be marked with timestamp and user identity.
 
-\paragraph{FR-38: Resolve Alerts}
+\paragraph{FR-35: Resolve Alerts}
 The system shall allow users to mark alerts as resolved with optional resolution notes.
 
-\paragraph{FR-39: Configure Alert Preferences}
+\paragraph{FR-36: Configure Alert Preferences}
 The system shall allow administrators to configure alert thresholds, notification channels, and user assignments.
 
 \subsection{Data Analytics and Reporting}
 
-\paragraph{FR-40: Real-Time Dashboard}
+\paragraph{FR-37: Real-Time Dashboard}
 The system shall provide a main dashboard displaying total cattle count, cattle by status, active alerts count, geofence compliance summary, and recent activity highlights.
 
-\paragraph{FR-41: Individual Cattle Dashboard}
+\paragraph{FR-38: Individual Cattle Dashboard}
 The system shall provide detailed dashboard for individual animals showing current location, activity graphs, alert history, and key metrics.
 
-\paragraph{FR-42: Herd Overview Analytics}
-The system shall provide herd-level analytics including activity distribution charts, location heat maps, health status summary, and trend indicators.
-
-\paragraph{FR-43: Power BI Integration}
+\paragraph{FR-39: Power BI Integration}
 The system shall integrate with Microsoft Power BI for advanced data visualization, enabling users to create custom dashboards and reports.
 
-\paragraph{FR-44: Daily Activity Reports}
+\paragraph{FR-40: Daily Activity Reports}
 The system shall generate automated daily reports summarizing cattle locations, activity levels, alerts generated, and any incidents.
 
-\paragraph{FR-45: Custom Report Builder}
-The system shall provide a report builder allowing users to create custom reports by selecting data sources, date ranges, and output format.
+\paragraph{FR-41: Scheduled Reports}
+The system shall allow administrators to schedule automated report generation and delivery via email at specified intervals (daily, weekly, monthly, yearly).
 
-\paragraph{FR-46: Scheduled Reports}
-The system shall allow administrators to schedule automated report generation and delivery via email at specified intervals (daily, weekly, monthly).
-
-\paragraph{FR-47: Trend Analysis}
+\paragraph{FR-42: Trend Analysis}
 The system shall provide trend analysis tools showing activity patterns, location preferences, and behavior changes over selectable time periods.
-
-\paragraph{FR-48: Comparative Analysis}
-The system shall allow comparison of metrics between individual cattle, groups, and time periods to identify outliers and patterns.
 
 \subsection{System Administration}
 
-\paragraph{FR-49: User Account Management}
-The system shall allow administrators to create new accounts, modify user details, change roles, reset passwords, and deactivate accounts. All actions shall be logged.
+\paragraph{FR-43: User Account Management}
+The system shall allow administrators to create new accounts, modify user details, reset passwords, and deactivate accounts. All actions shall be logged.
 
-\paragraph{FR-50: Audit Logging}
-The system shall maintain comprehensive audit logs recording user actions, system changes, data modifications, and security events with timestamps.
-
-\paragraph{FR-51: General System Settings}
+\paragraph{FR-44: General System Settings}
 The system shall provide configuration interface for organization details, time zone, measurement units, and date/time formats.
 
-\paragraph{FR-52: Device Management}
+\paragraph{FR-45: Device Management}
 The system shall allow administrators to register new collar devices, assign devices to cattle, modify device settings, and view device status.
 
-\paragraph{FR-53: Notification Configuration}
-The system shall allow configuration of alert thresholds, notification channels, escalation rules, and quiet hours.
+\paragraph{FR-46: Notification Configuration}
+The system shall allow configuration of alert thresholds, and notification channels.
 
-\paragraph{FR-54: Data Backup}
+\paragraph{FR-47: Data Backup}
 The system shall perform automated daily backups of all system data to secure cloud storage with retention period of 90 days.
 
 
@@ -713,7 +666,7 @@ Standard reports shall be generated within 10 seconds for date ranges up to 30 d
 The system shall process GPS data from at least 1,000 collar devices simultaneously.
 
 \paragraph{NFR-07: Concurrent User Support}
-The system shall support at least 50 concurrent users accessing the mobile or web applications simultaneously without performance degradation.
+The system shall support at least 50 concurrent users accessing the mobile simultaneously without performance degradation.
 
 \paragraph{NFR-08: Database Query Performance}
 Database queries for current cattle status shall execute in under 1 second for herds up to 1,000 animals.
@@ -721,10 +674,10 @@ Database queries for current cattle status shall execute in under 1 second for h
 \subsection{Reliability Requirements}
 
 \paragraph{NFR-09: System Uptime}
-The system shall maintain 99.5\% uptime excluding planned maintenance windows, allowing maximum 43.8 hours of downtime per year.
+The system shall maintain 99.9\% uptime excluding planned maintenance.
 
 \paragraph{NFR-10: Data Recovery Time}
-In the event of system failure, data recovery and system restoration shall be completed within 4 hours.
+In the event of system failure, data recovery and system restoration shall be completed within 1 hour.
 
 \paragraph{NFR-11: Backup Verification}
 System backups shall be verified weekly to ensure recoverability. Backup restoration testing shall be performed quarterly.
@@ -732,85 +685,79 @@ System backups shall be verified weekly to ensure recoverability. Backup restora
 \paragraph{NFR-12: Error Handling}
 The system shall implement comprehensive error handling with graceful degradation and informative error messages to users.
 
-\paragraph{NFR-13: Fault Tolerance}
-The system shall continue operating with degraded functionality if individual components fail, ensuring critical features remain available.
-
 \subsection{Security Requirements}
 
-\paragraph{NFR-14: Data Encryption}
-All sensitive data shall be encrypted both in transit (using TLS 1.2+) and at rest (using AES-256 encryption).
+\paragraph{NFR-13: Data Encryption}
+All sensitive data shall be encrypted.
 
-\paragraph{NFR-15: Password Storage}
-User passwords shall be hashed using bcrypt algorithm with salt before storage. Plain text passwords shall never be stored.
+\paragraph{NFR-14: Password Storage}
+User passwords shall be hashed using bcrypt algorithm. Plain text passwords shall never be stored.
 
-\paragraph{NFR-16: Session Security}
-User sessions shall be secured with randomly generated tokens, automatic timeout after 30 minutes of inactivity, and secure cookie attributes.
+\paragraph{NFR-15: Session Security}
+User sessions shall be secured with randomly generated tokens, automatic timeout after 15 minutes of inactivity, and secure cookie attributes.
 
-\paragraph{NFR-17: Access Control}
+\paragraph{NFR-16: Access Control}
 The system shall enforce role-based access control, preventing unauthorized users from accessing restricted features or data.
 
-\paragraph{NFR-18: Audit Trail}
-All security-relevant events (login attempts, permission changes, data modifications) shall be logged with timestamp, user identity, and action details.
-
-\paragraph{NFR-19: Data Privacy}
+\paragraph{NFR-17: Data Privacy}
 The system shall ensure that only authorized users can access cattle and farm data, maintaining confidentiality at all times.
 
 \subsection{Usability Requirements}
 
-\paragraph{NFR-20: Learning Curve}
+\paragraph{NFR-18: Learning Curve}
 Users with basic smartphone skills shall be able to perform common tasks (view cattle locations, respond to alerts) within 15 minutes of first use.
 
-\paragraph{NFR-21: Interface Simplicity}
+\paragraph{NFR-19: Interface Simplicity}
 The mobile application interface shall be intuitive and easy to navigate for users with minimal technical knowledge.
 
-\paragraph{NFR-22: Help Documentation}
+\paragraph{NFR-20: Help Documentation}
 The system shall provide context-sensitive help and user documentation accessible within the application.
 
-\paragraph{NFR-23: Error Messages}
+\paragraph{NFR-21: Error Messages}
 Error messages shall be clear, specific, and provide guidance on how to resolve the issue.
 
-\paragraph{NFR-24: Consistency}
+\paragraph{NFR-22: Consistency}
 User interface elements, terminology, and interaction patterns shall be consistent throughout the application.
 
 \subsection{Maintainability Requirements}
 
-\paragraph{NFR-25: Code Documentation}
+\paragraph{NFR-23: Code Documentation}
 Source code shall include inline comments for complex logic and comprehensive API documentation.
 
-\paragraph{NFR-26: Modular Architecture}
+\paragraph{NFR-24: Modular Architecture}
 The system shall be designed with modular architecture allowing individual components to be updated without affecting others.
 
-\paragraph{NFR-27: Version Control}
+\paragraph{NFR-25: Version Control}
 All source code shall be maintained in Git version control system with meaningful commit messages.
 
-\paragraph{NFR-28: Database Maintenance}
-The system shall support routine maintenance operations (backup, optimization, archival) without requiring system shutdown.
+\paragraph{NFR-26: Database Maintenance}
+The system shall support routine maintenance operations.
 
 \subsection{Scalability Requirements}
 
-\paragraph{NFR-29: Cattle Population Support}
+\paragraph{NFR-27: Cattle Population Support}
 The system shall support monitoring of at least 5,000 individual cattle per installation without hardware upgrades.
 
-\paragraph{NFR-30: Horizontal Scalability}
+\paragraph{NFR-28: Horizontal Scalability}
 The system architecture shall support horizontal scaling of application servers and database instances to accommodate growth.
 
-\paragraph{NFR-31: Data Storage Capacity}
+\paragraph{NFR-29: Data Storage Capacity}
 The system shall store complete location and activity data for all cattle for minimum 2 years with efficient retrieval.
 
 \subsection{Portability Requirements}
 
-\paragraph{NFR-32: Android Platform Support}
-The mobile application shall run on Android devices version 10.0 and above without modification.
+\paragraph{NFR-30: Android Platform Support}
+The mobile application shall run on Android devices.
 
-\paragraph{NFR-33: Cloud Platform Independence}
+\paragraph{NFR-31: Cloud Platform Independence}
 The system architecture shall minimize dependencies on specific cloud provider features to facilitate potential migration.
 
 \subsection{Availability Requirements}
 
-\paragraph{NFR-34: Planned Maintenance}
-Planned maintenance windows shall be scheduled during low-usage periods (midnight to 4 AM) with 48-hour advance notification.
+\paragraph{NFR-32: Planned Maintenance}
+Planned maintenance windows shall be scheduled during low-usage periods (midnight to 4 AM) with 24-hour advance notification.
 
-\paragraph{NFR-35: Offline Capability}
+\paragraph{NFR-33: Offline Capability}
 The mobile application shall cache recently viewed data and provide read-only access when network connectivity is unavailable.
 
 \section{External Interface Requirements}
@@ -818,7 +765,7 @@ The mobile application shall cache recently viewed data and provide read-only ac
 \subsection{User Interface Requirements}
 
 \paragraph{IR-01: Mobile Platform Support}
-The system shall provide native mobile application for Android (version 10.0 and above).
+The system shall provide native mobile application for Android.
 
 \paragraph{IR-02: Mobile Navigation Structure}
 The mobile application shall implement bottom navigation with sections: Dashboard, Map, Alerts, Cattle List, and Settings.
@@ -838,56 +785,44 @@ The web interface shall adapt to different screen sizes maintaining usability fr
 \subsection{Hardware Interface Requirements}
 
 \paragraph{IR-07: Device Communication Protocol}
-The system shall communicate with GPS collar devices using MQTT protocol over secure TLS connection.
+The system shall communicate with GPS collar devices using MQTT (Message Queuing Telemetry Transport) protocol over secure TLS (Transport Layer Security) connection.
 
 \paragraph{IR-08: Data Packet Format}
 GPS collar devices shall transmit data in JSON format containing device ID, timestamp, GPS coordinates, accuracy, battery percentage, and activity metrics.
 
-\paragraph{IR-09: Device Command Interface}
-The system shall support sending configuration commands to devices including data transmission frequency adjustment and low-power mode activation.
-
-\paragraph{IR-10: Mobile Device GPS Integration}
+\paragraph{IR-09: Mobile Device GPS Integration}
 The mobile application may access device GPS to show user location on maps relative to cattle positions.
 
 \subsection{Software Interface Requirements}
 
-\paragraph{IR-11: Cloud IoT Service}
+\paragraph{IR-10: Cloud IoT Service}
 The system shall interface with Azure IoT Hub or AWS IoT Core using standard MQTT or AMQP protocols.
 
-\paragraph{IR-12: Cloud Database Interface}
+\paragraph{IR-11: Cloud Database Interface}
 The system shall interface with cloud database services using standard SQL queries and ORM frameworks.
 
-\paragraph{IR-13: Cloud Storage Interface}
-The system shall interface with cloud blob storage for storing images, reports, and backup files.
+\paragraph{IR-12: Cloud Storage Interface}
+The system shall interface with cloud storage for storing images, reports, and backup files.
 
-\paragraph{IR-14: Mapping Service Integration}
+\paragraph{IR-13: Mapping Service Integration}
 The system shall integrate with Google Maps API or equivalent for map display and geocoding functions.
 
-\paragraph{IR-15: SMS Gateway Interface}
-The system shall interface with SMS gateway service via REST API for sending text notifications.
-
-\paragraph{IR-16: Email Service Interface}
-The system shall interface with email delivery service via SMTP or REST API for notifications and reports.
-
-\paragraph{IR-17: Power BI Integration}
+\paragraph{IR-14: Power BI Integration}
 The system shall expose data through REST API endpoints compatible with Power BI data connectors.
 
 \subsection{Communication Interface Requirements}
 
-\paragraph{IR-18: HTTPS Communication}
-All communication between client applications and cloud services shall use HTTPS with TLS 1.2 or higher encryption.
+\paragraph{IR-15: HTTPS Communication}
+All communication between client applications and cloud services shall use HTTPS with TLS.
 
-\paragraph{IR-19: RESTful API}
+\paragraph{IR-16: RESTful API}
 The system shall expose RESTful API following standard HTTP methods (GET, POST, PUT, DELETE).
 
-\paragraph{IR-20: JSON Data Format}
+\paragraph{IR-17: JSON Data Format}
 All API communications shall use JSON format for request and response bodies.
 
-\paragraph{IR-21: API Authentication}
+\paragraph{IR-18: API Authentication}
 API requests shall be authenticated using bearer tokens (JWT) transmitted in Authorization headers.
-
-\paragraph{IR-22: API Rate Limiting}
-The API shall implement rate limiting (default 1000 requests per hour) with appropriate HTTP 429 status codes.
 
 \section{Design Constraints}
 
@@ -1035,7 +970,7 @@ The use case diagram illustrates the functional interactions between system acto
 \end{enumerate}
 
 \textbf{Postcondition:} User accounts are updated
-\subsection{Use Case Diagram} \begin{figure}[H] \centering \includegraphics[width=0.8\textwidth]{UseCase.jpg} \caption{Use Case Diagram of CattleCare Pro} \end{figure}
+\subsection{Use Case Diagram} \begin{figure}[H] \centering \includegraphics[width=0.8\textwidth]{use_case.jpg} \caption{Use Case Diagram of CattleCare Pro} \end{figure}
 
 \section{Context Diagram}
 
@@ -1075,7 +1010,7 @@ The context diagram represents the CattleCare Pro system as a single process and
 
 \textbf{Data Encryption:} Process of converting information into code to prevent unauthorized access.
 
-\textbf{Geofencing:} Use of GPS or RFID technology to create virtual geographic boundary, enabling software to trigger response when device enters or leaves area.
+\textbf{Geofencing:} Use of GPS technology to create virtual geographic boundary, enabling software to trigger response when device enters or leaves area.
 
 \textbf{IoT Hub:} Cloud service that provides bidirectional communication between IoT application and devices it manages.
 
@@ -1147,30 +1082,6 @@ GPS signal loss & Medium & Medium & Multiple position sources, interpolation \\ 
 \item \textbf{Q3 2025:} Health sensor integration
 \item \textbf{Q4 2025:} Multi-farm and enterprise features
 \end{itemize}
-
-\section{Requirements Traceability Matrix}
-
-\begin{longtable}{|p{2cm}|p{5cm}|p{2.5cm}|p{3.5cm}|}
-\caption{Requirements Traceability} \\
-\hline
-\textbf{Req ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Test Case} \\ \hline
-\endfirsthead
-\hline
-\textbf{Req ID} & \textbf{Requirement} & \textbf{Priority} & \textbf{Test Case} \\ \hline
-\endhead
-FR-01 & User account creation & High & TC-AUTH-01 \\ \hline
-FR-02 & Secure login & High & TC-AUTH-02 \\ \hline
-FR-03 & Password security & High & TC-AUTH-03 \\ \hline
-FR-12 & Receive GPS coordinates & Critical & TC-GPS-01 \\ \hline
-FR-15 & Display current locations & Critical & TC-MAP-01 \\ \hline
-FR-27 & Create geofence areas & High & TC-GEO-01 \\ \hline
-FR-32 & Geofence violation alerts & Critical & TC-ALERT-01 \\ \hline
-FR-42 & Real-time dashboard & High & TC-DASH-01 \\ \hline
-FR-45 & Power BI integration & Medium & TC-BI-01 \\ \hline
-NFR-01 & UI response time & High & TC-PERF-01 \\ \hline
-NFR-09 & System uptime & High & TC-REL-01 \\ \hline
-NFR-14 & Data encryption & Critical & TC-SEC-01 \\ \hline
-\end{longtable}
 
 \section{Supporting Documentation References}
 
