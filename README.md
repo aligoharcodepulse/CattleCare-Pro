@@ -64,6 +64,9 @@ RP/Supervisor: Dr. Shafiq Ur Rehman
 🔗 Meeting Images
 ➡️ https://github.com/aligoharcodepulse/CattleCare-Pro/tree/main/Meeting_Images
 
+🔗 Figma Prototype
+➡️ [https://github.com/aligoharcodepulse/CattleCare-Pro/tree/main/Meeting_Images](https://www.figma.com/proto/8dRWAaDIKINkYw2nsUOst7/CattleCare-Pro?node-id=77-54&p=f&t=BxerLRbvYSEUO1UM-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=77%3A54)
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 📝 Project Summary
