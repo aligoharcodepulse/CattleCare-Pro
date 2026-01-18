@@ -1,0 +1,441 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{parskip}
+\usepackage{tikz}
+\usepackage{everypage}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{tabularx}
+
+\usetikzlibrary{calc}
+
+\AddEverypageHook{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \draw[line width=1pt]
+            ($(current page.north west) + (1cm,-1cm)$)
+            rectangle
+            ($(current page.south east) + (-1cm,1cm)$);
+    \end{tikzpicture}
+}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\begin{document}
+
+% ==================== TITLE PAGE ====================
+\begin{titlepage}
+    \centering
+    \vspace*{1cm}
+
+    \includegraphics[width=4cm]{logo.png}\par\vspace{1cm}
+
+    {\Large \textbf{NAMAL UNIVERSITY MIANWALI}}\\[6pt]
+    {\large \textbf{Department of Computer Science}}\\[1.5cm]
+
+    {\Huge \textbf{System Design Specification}}\\[0.5cm]
+    {\LARGE \textbf{Milestone 3}}\\[0.3cm]
+    {\LARGE \textbf{CattleCare Pro}}\\[1.8cm]
+
+    {\large \textbf{Subject:} Software Engineering}\\[1cm]
+
+    \begin{center}
+    \begin{tabular}{ >{\bfseries}l  l }
+    Student 1: & Muhammad Ali \\
+    Registration No: & NUM-BSCS-2024-46\\
+    Email: & bscs24f46@namal.edu.pk\\[8pt]
+
+    Student 2: & Muhammad Ahmad\\
+    Registration No: & NUM-BSCS-2024-45 \\
+    Email: & bscs24f45@namal.edu.pk \\[8pt]
+
+    Student 3: & Aliya Ashraf \\
+    Registration No: & NUM-BSCS-2024-08 \\
+    Email: & bscs24f08@namal.edu.pk\\[8pt]
+    \end{tabular}
+    \end{center}
+
+    \vfill
+
+    \begin{flushleft}
+    \textbf{Submitted To:}\\
+    Ms. Asiya Batool\\
+    Lecturer, Department of Computer Science
+    \end{flushleft}
+
+    \vspace{1cm}
+
+    {\large \textbf{Submission Date:} January 18, 2026}
+
+\end{titlepage}
+
+% ==================== TABLE OF CONTENTS ====================
+\tableofcontents
+\newpage
+
+\listoffigures
+\newpage
+
+\listoftables
+\newpage
+
+% ==================== CHAPTER 1: INTRODUCTION ====================
+\chapter{Introduction}
+
+\section{Document Purpose}
+
+This System Design Specification document presents the complete design of the CattleCare Pro livestock management system based on the approved Software Requirements Specification (SRS). This document translates all requirements into detailed behavioral and structural models using standard UML diagrams.
+
+\section{Project Overview}
+
+CattleCare Pro is an intelligent livestock management system designed for cattle farm owners to manage their farms from a single digital hub. The emphasis of the system is on enhancing security and productivity among the cattle through a modern technological approach.
+
+\section{Document Organization}
+
+This document includes the following chapters:
+
+\begin{itemize}
+    \item Chapter 2: Design Assumptions and Constraints
+    \item Chapter 3: Key Design Decisions
+    \item Chapter 4: Use Case Diagram
+    \item Chapter 5: Data Flow Diagrams
+    \item Chapter 6: Sequence Diagrams
+    \item Chapter 7: Activity Diagrams
+    \item Chapter 8: Class Diagram
+    \item Chapter 9: Component Diagram
+    \item Chapter 10: Requirements-Design Traceability
+    \item Chapter 11: Links
+\end{itemize}
+
+% ==================== CHAPTER 2: DESIGN ASSUMPTIONS AND CONSTRAINTS ====================
+\chapter{Design Assumptions and Constraints}
+
+\section{Design Assumptions}
+
+During the design of the Cattle Care Pro system, certain assumptions were made to define the expected operating environment and user behavior.
+
+\begin{enumerate}
+    \item The system will be used primarily by farm owner/admin responsible for cattle monitoring and management.
+    
+    \item Each cattle unit is uniquely identifiable within the system using a unique cattle ID.
+    
+    \item GPS-enabled devices are attached to cattle for location tracking.
+    
+    \item Internet connectivity is assumed to be available for real-time data transmission.
+    
+    \item The system is deployed in a single-farm environment and does not support multi-farm operations.
+    
+    \item Data entered into the system is assumed to be accurate and verified by authorized personnel.
+\end{enumerate}
+
+\section{Design Constraints}
+
+\subsection{Hardware Constraints}
+
+\begin{itemize}
+    \item The accuracy of cattle tracking is constrained by GPS signal strength and device availability.
+    
+    \item GPS collar devices must operate within temperature range of -20°C to +50°C.
+    
+    \item Device weight is constrained to maximum 500 grams.
+    
+    \item Battery life of GPS collars limits continuous high-frequency data transmission.
+\end{itemize}
+
+\subsection{Network Constraints}
+
+\begin{itemize}
+    \item System performance depends on network stability and bandwidth.
+    
+    \item Limited cellular coverage in remote grazing areas may cause data transmission delays.
+    
+\end{itemize}
+
+\subsection{Security Constraints}
+
+\begin{itemize}
+    \item Data security mechanisms are restricted to authentication-based access control and role management.
+    
+    \item All communications must use HTTPS protocol.
+    
+    \item Password storage must use bcrypt hashing algorithm.
+    
+    \item Session timeout is constrained to 15 minutes of inactivity.
+\end{itemize}
+
+\subsection{Platform Constraints}
+
+\begin{itemize}
+    \item The mobile application is constrained to Android platform (API level 29+).
+    
+    \item System operates within predefined hardware limitations such as processing power and storage capacity.
+    
+    \item The application is constrained to predefined screen resolutions and interface layouts.
+    
+    \item External hardware dependencies such as GPS trackers must be compatible with the system.
+\end{itemize}
+
+% ==================== CHAPTER 3: KEY DESIGN DECISIONS ====================
+\chapter{Key Design Decisions}
+
+Key design decisions were made during the development of the CattleCare Pro system to ensure modularity, scalability, and ease of maintenance.
+
+\section{DFD Process Decomposition}
+
+The system functionality was decomposed into smaller and manageable processes to improve system clarity and maintainability. Instead of representing the entire system as a single process, it was divided into logical sub-processes such as authentication, cattle management, location tracking, shelter monitoring, and report generation.
+
+This decomposition allows each process to operate independently while maintaining clear data flow between processes. It simplifies debugging, enhances system understanding, and supports future system extensions.
+
+\section{Selection of Class Relationships}
+
+Different types of class relationships were selected based on ownership, dependency, and object lifecycle.
+
+\textbf{Composition} was used between the Cattle and Location classes because location data cannot exist independently without a corresponding cattle entity. This represents a strong lifecycle dependency.
+
+\textbf{Aggregation} was applied between the Shelter and Cattle classes since cattle may exist independently of shelters. This relationship reflects a weak ownership model.
+
+\textbf{Association} relationships were used where objects interact but do not share ownership, such as between Admin and Cattle.
+
+\section{Distribution of Functionality Across Multiple Diagrams}
+
+Complex system functionality was distributed across multiple sequence diagrams and activity diagrams instead of creating single comprehensive diagrams. This improves readability, maintainability, and traceability.
+
+% ==================== CHAPTER 4: USE CASE DIAGRAM ====================
+\chapter{Use Case Diagram}
+
+The Use Case Diagram provides a high-level view of system functionality by identifying actors and their interactions with the system.
+
+\section{Actors}
+
+\begin{enumerate}
+    \item \textbf{Farm Owner/Administrator} - Primary user with full access
+    \item \textbf{GPS Collar Device} - External hardware providing data
+    \item \textbf{Cloud Server} - External system for data storage
+    \item \textbf{Camera} - External device for shelter security
+\end{enumerate}
+
+\section{Use Case Diagram}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{diagrams/use_case.drawio.png}
+    \caption{Use Case Diagram of CattleCare Pro System}
+    \label{fig:usecase}
+\end{figure}
+
+% ==================== CHAPTER 5: DATA FLOW DIAGRAMS ====================
+\chapter{Data Flow Diagrams}
+
+Data Flow Diagrams represent the flow of data through the CattleCare Pro system at different levels of abstraction.
+
+\section{Level 0 DFD - Context Diagram}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{diagrams/DFD_0.drawio.png}
+    \caption{Level 0 DFD - Context Diagram}
+    \label{fig:dfd0}
+\end{figure}
+
+\section{Level 1 DFD}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{diagrams/DFD_1.drawio.png}
+    \caption{Level 1 DFD - Major System Processes}
+    \label{fig:dfd1}
+\end{figure}
+
+\section{Level 2 DFD}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth]{diagrams/_ DFD_2 Cattle management.drawio.png}
+    \caption{Level 2 DFD - Cattle Management Decomposition}
+    \label{fig:dfd2}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth]{diagrams/DFD_2 GPS.drawio.png}
+    \caption{Level 2 DFD - Location Tracking}
+    \label{fig:dfd2}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth]{diagrams/DFD_2 NOTIFY.drawio.png}
+    \caption{Level 2 DFD - Notification}
+    \label{fig:dfd2}
+\end{figure}
+
+% ==================== CHAPTER 6: SEQUENCE DIAGRAMS ====================
+\chapter{Sequence Diagrams}
+
+Sequence diagrams model the interaction between objects over time for key system functionalities.
+
+\section{User Authentication Sequence}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{diagrams/Sequence diagram USER login.drawio.png}
+    \caption{Sequence Diagram - User Authentication}
+    \label{fig:seq-auth}
+\end{figure}
+
+\section{Cattle Registration Sequence}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{diagrams/cattle registration sequence diagram.png}
+    \caption{Sequence Diagram - Cattle Registration}
+    \label{fig:seq-reg}
+\end{figure}
+
+\section{Location Tracking Sequence}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{diagrams/tracking location sequence diagram.png}
+    \caption{Sequence Diagram - Location Tracking}
+    \label{fig:seq-location}
+\end{figure}
+
+\section{Alert Generation Sequence}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{diagrams/Sequence diagram GEOFence Violation.drawio.png}
+    \caption{Sequence Diagram - Alert Generation}
+    \label{fig:seq-alert}
+\end{figure}
+
+\section{Report Generation Sequence}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{diagrams/Sequence_Diagram Report genertaion.drawio.png}
+    \caption{Sequence Diagram - Report Generation}
+    \label{fig:seq-report}
+\end{figure}
+
+% ==================== CHAPTER 7: ACTIVITY DIAGRAMS ====================
+\chapter{Activity Diagrams}
+
+Activity diagrams model the workflow of business processes, showing sequence of activities and decision points.
+
+\section{Cattle Registration Workflow}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{diagrams/Activity_1.drawio.png}
+    \caption{Activity Diagram - Cattle Registration Workflow}
+    \label{fig:act-reg}
+\end{figure}
+
+\section{Alert Processing Workflow}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{diagrams/acticity diagram notification.png}
+    \caption{Activity Diagram - Alert Processing Workflow}
+    \label{fig:act-alert}
+\end{figure}
+
+\section{Geofence Violation Detection}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{diagrams/geofence violation activity diagram.png}
+    \caption{Activity Diagram - Geofence Violation Detection}
+    \label{fig:act-geofence}
+\end{figure}
+
+% ==================== CHAPTER 8: CLASS DIAGRAM ====================
+\chapter{Class Diagram}
+
+The class diagram represents the static structure of the Cattle Care Pro system. It identifies the core classes, their attributes, operations, and the relationships among them.
+
+\section{Class Diagram}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\textwidth]{diagrams/CLD.drawio.png}
+    \caption{Class Diagram of CattleCare Pro System}
+    \label{fig:class}
+\end{figure}
+
+% ==================== CHAPTER 9: COMPONENT DIAGRAM ====================
+\chapter{Component Diagram}
+
+The component diagram illustrates the high-level architectural structure of the Cattle Care Pro system. Each component represents a logical module responsible for a specific functionality.
+
+\section{Component Diagram}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{diagrams/COD.drawio.drawio.png}
+    \caption{Component Diagram of CattleCare Pro System}
+    \label{fig:component}
+\end{figure}
+
+% ==================== CHAPTER 10: REQUIREMENTS-DESIGN TRACEABILITY ====================
+\chapter{Requirements--Design Traceability Table}
+
+The Requirements--Design Traceability Table ensures that every functional requirement identified in the Software Requirements Specification (SRS) is properly addressed in the system design.
+
+\section{Traceability Matrix}
+
+\begin{table}[H]
+\centering
+\caption{Requirements--Design Traceability Matrix}
+\label{tab:traceability}
+\small
+\begin{tabularx}{\textwidth}{|l|X|l|l|l|X|}
+\hline
+\textbf{Req ID} & \textbf{Description} & \textbf{Use Case} & \textbf{DFD} & \textbf{Sequence} & \textbf{Classes} \\
+\hline
+FR-01 & Administrator authentication and authorization & UC-01 & 1.0 & SD-1 & User, Admin \\
+\hline
+FR-07 & Register new cattle information & UC-02 & 2.1, 2.2 & SD-2 & Cattle \\
+\hline
+FR-08 & Update cattle profile and health status & UC-02 & 2.4 & - & Cattle \\
+\hline
+FR-12 & Track real-time cattle location using GPS & UC-03 & 3.0 & SD-3 & Cattle, Location \\
+\hline
+FR-25 & Monitor shelter capacity and conditions & UC-06 & - & - & Shelter \\
+\hline
+FR-30 & View cattle movement and reports & UC-07 & 6.0 & SD-5 & Admin, Cattle \\
+\hline
+FR-40 & Store and retrieve system data securely & - & All & - & Cloud \\
+\hline
+\end{tabularx}
+\end{table}
+
+
+% ==================== CHAPTER 12: GITHUB REPOSITORY ====================
+\chapter{Links}
+
+\section{GitHub Repository}
+
+\textbf{Link:} \url{https://github.com/aligoharcodepulse/CattleCare-Pro}
+
+\section{Figma Prototype}
+
+\textbf{Link:} \url{https://www.figma.com/proto/8dRWAaDIKINkYw2nsUOst7/CattleCare-Pro?node-id=77-54&p=f&t=BxerLRbvYSEUO1UM-0&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=77%3A54}
+
+\section{LinkedIn Post}
+
+\textbf{Link:} \url{https://www.linkedin.com/posts/muhammad-ali-gohar-b47662277_softwareengineering-livestockmanagement-mobileappdevelopment-activity-7418627360222191616-LtBr?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAEOM8ecBymnVVSNwzpngSdP-jVv4gCwDCzw}
+
+\end{document}
